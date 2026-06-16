@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///D:/donwload/%E9%9D%9E%E9%81%97%E7%9B%B2%E7%9B%92.html -->
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非遗盲盒 · 今日之物</title>
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --vermillion: #c0392b;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --smoke: #f0ebe3;
+    --ash: #9a9088;
+    --paper: #faf6f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--smoke);
+    font-family: "Noto Serif SC", "Noto Sans SC", serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  header { width: 100%; padding: 2rem 2rem 0; text-align: center; }
+  .logo {
+    font-family: "Noto Serif SC", serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+  }
+  .tagline { font-size: 0.75rem; letter-spacing: 0.2em; color: var(--ash); margin-top: 0.3rem; }
+
+  /* ── Lang badge ── */
+  .lang-badge {
+    position: fixed; top: 1rem; right: 1rem; z-index: 100;
+    display: flex; gap: 0.3rem;
+  }
+  .lang-badge button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px; color: var(--ash);
+    font-size: 0.7rem; padding: 0.25rem 0.5rem;
+    cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s;
+  }
+  .lang-badge button:hover, .lang-badge button.active {
+    color: var(--gold); border-color: var(--gold); background: rgba(201,168,76,0.1);
+  }
+
+  /* ── Main layout ── */
+  main {
+    width: 100%; max-width: 680px;
+    padding: 2.5rem 1.5rem 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 2.5rem;
+  }
+
+  .step-label { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--ash); text-align: center; }
+
+  .screen { width: 100%; display: none; flex-direction: column; align-items: center; gap: 2rem; }
+  .screen.active { display: flex; }
+
+  .prompt {
+    font-family: "Noto Serif SC", serif;
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    font-weight: 700; text-align: center; line-height: 1.6; color: var(--smoke);
+  }
+  .prompt em { color: var(--gold); font-style: normal; }
+
+  /* ── Language select ── */
+  .lang-grid { display: flex; gap: 1rem; width: 100%; max-width: 420px; }
+  .lang-btn {
+    flex: 1; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 14px; padding: 2rem 1rem; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+    transition: all 0.25s ease; color: var(--smoke);
+  }
+  .lang-btn:hover, .lang-btn.selected {
+    border-color: var(--gold); background: rgba(201,168,76,0.08);
+    transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.1);
+  }
+  .lang-flag { font-size: 2.2rem; }
+  .lang-name { font-family: "Noto Serif SC", serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; }
+  .lang-sub { font-size: 0.7rem; color: var(--ash); letter-spacing: 0.05em; }
+
+  /* ── Emotion grid ── */
+  .emotion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; width: 100%; }
+  .emotion-btn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px; padding: 1.1rem 0.5rem; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    transition: all 0.2s ease; color: var(--smoke); position: relative; z-index: 1;
+  }
+  .emotion-btn:hover, .emotion-btn.selected {
+    border-color: var(--gold); background: rgba(201,168,76,0.08);
+  }
+  .emotion-btn.selected { background: rgba(201,168,76,0.15); box-shadow: 0 0 20px rgba(201,168,76,0.1); }
+  .emotion-icon { font-size: 1.8rem; pointer-events: none; }
+  .emotion-name { font-size: 0.85rem; letter-spacing: 0.05em; font-family: "Noto Serif SC", serif; pointer-events: none; }
+  .emotion-sub { font-size: 0.65rem; color: var(--ash); letter-spacing: 0.02em; pointer-events: none; }
+
+  /* ── Vibe pick ── */
+  .vibe-grid { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+  .vibe-btn {
+    background: transparent; border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 30px; padding: 0.55rem 1.1rem; cursor: pointer;
+    font-size: 0.82rem; color: var(--smoke); letter-spacing: 0.05em;
+    transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem;
+    position: relative; z-index: 1;
+  }
+  .vibe-btn > * { pointer-events: none; }
+  .vibe-btn:hover, .vibe-btn.selected {
+    border-color: var(--vermillion); background: rgba(192,57,43,0.12);
+  }
+  .vibe-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--vermillion); color: white; border: none;
+    border-radius: 8px; padding: 0.9rem 2.5rem; font-size: 1rem;
+    font-family: "Noto Serif SC", serif; font-weight: 700; letter-spacing: 0.15em;
+    cursor: pointer; transition: all 0.2s; z-index: 1;
+  }
+  .cta:hover { background: #a93226; transform: translateY(-1px); }
+  .cta:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* Back button */
+  .back-btn {
+    background: none; border: none; color: var(--ash);
+    font-size: 0.75rem; cursor: pointer; letter-spacing: 0.1em;
+    padding: 0.4rem 0; transition: color 0.2s;
+    font-family: inherit;
+  }
+  .back-btn:hover { color: var(--gold); }
+
+  /* ── Box screen ── */
+  #screen-open { justify-content: center; min-height: 300px; }
+
+  .box-wrapper { display: flex; flex-direction: column; align-items: center; gap: 1.8rem; }
+
+  .box-container {
+    position: relative; width: 180px; height: 180px; cursor: pointer; z-index: 1;
+  }
+
+  .box {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a1614 0%, #2d2420 100%);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: transform 0.15s ease, opacity 0.4s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 40px rgba(201,168,76,0.15), inset 0 0 30px rgba(201,168,76,0.03);
+  }
+  .box:hover { transform: scale(1.03); }
+
+  .box-glyph {
+    font-family: "Noto Serif SC", serif; font-size: 2.5rem;
+    color: rgba(201,168,76,0.2); user-select: none; transition: all 0.3s;
+  }
+
+  .box-hint {
+    position: absolute; bottom: -2.2rem; width: 100%;
+    text-align: center; font-size: 0.72rem; color: var(--ash);
+    letter-spacing: 0.15em; transition: opacity 0.3s;
+  }
+
+  /* pulse ring */
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.35); opacity: 0; }
+  }
+  .box::before {
+    content: ''; position: absolute; inset: -6px;
+    border: 1px solid var(--gold); border-radius: 20px;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  /* ── Progress indicator ── */
+  .tap-progress {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .tap-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(201,168,76,0.2);
+    border: 1px solid rgba(201,168,76,0.3);
+    transition: all 0.3s ease;
+  }
+  .tap-dot.filled {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(201,168,76,0.4);
+  }
+  .tap-dot.current {
+    border-color: var(--gold);
+    animation: dot-pulse 1s ease-in-out infinite;
+  }
+  @keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(201,168,76,0.2); }
+    50% { box-shadow: 0 0 14px rgba(201,168,76,0.6); }
+  }
+
+  /* ── Hint reveal ── */
+  .hint-text {
+    text-align: center; font-size: 0.9rem; color: var(--gold-light);
+    letter-spacing: 0.08em; min-height: 1.5em;
+    padding: 0.8rem 1.2rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    opacity: 0; transform: translateY(8px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 320px; width: 100%;
+  }
+  .hint-text.show {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ── Box shake variations ── */
+  @keyframes shake-light {
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-3px)}
+    75%{transform:translateX(3px)}
+  }
+  @keyframes shake-medium {
+    0%,100%{transform:translateX(0) rotate(0)}
+    15%{transform:translateX(-5px) rotate(-1.5deg)}
+    30%{transform:translateX(5px) rotate(1.5deg)}
+    45%{transform:translateX(-4px) rotate(-1deg)}
+    60%{transform:translateX(4px) rotate(1deg)}
+    75%{transform:translateX(-2px)}
+  }
+  @keyframes shake-heavy {
+    0%,100%{transform:translateX(0) rotate(0) scale(1)}
+    10%{transform:translateX(-7px) rotate(-2deg) scale(0.98)}
+    20%{transform:translateX(7px) rotate(2deg) scale(1.02)}
+    30%{transform:translateX(-6px) rotate(-1.5deg)}
+    40%{transform:translateX(6px) rotate(1.5deg)}
+    50%{transform:translateX(-4px) rotate(-1deg)}
+    60%{transform:translateX(4px) rotate(1deg)}
+    70%{transform:translateX(-2px)}
+    80%{transform:translateX(2px)}
+  }
+
+  .box.shake-1 { animation: shake-light 0.4s ease; }
+  .box.shake-2 { animation: shake-medium 0.5s ease; }
+  .box.shake-3 { animation: shake-medium 0.55s ease; }
+  .box.shake-4 { animation: shake-heavy 0.7s ease; }
+  .box.shake-final { animation: shake-heavy 0.8s ease; }
+
+  /* Glow intensities */
+  .box.glow-1 { box-shadow: 0 0 50px rgba(201,168,76,0.2), inset 0 0 30px rgba(201,168,76,0.05); }
+  .box.glow-2 { box-shadow: 0 0 60px rgba(201,168,76,0.3), inset 0 0 40px rgba(201,168,76,0.08); }
+  .box.glow-3 { box-shadow: 0 0 70px rgba(201,168,76,0.4), inset 0 0 50px rgba(201,168,76,0.12); }
+  .box.glow-4 { box-shadow: 0 0 85px rgba(201,168,76,0.55), inset 0 0 60px rgba(201,168,76,0.18); }
+
+  /* Box open animation */
+  @keyframes box-burst {
+    0% { opacity: 1; transform: scale(1) rotate(0); }
+    50% { opacity: 0.3; transform: scale(1.1) rotate(5deg); }
+    100% { opacity: 0; transform: scale(1.3) rotate(10deg); }
+  }
+  .box.burst { animation: box-burst 0.6s cubic-bezier(0.36,0,0.66,1) forwards; }
+
+  /* Golden particles */
+  @keyframes particle-up {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0); }
+  }
+  .particle {
+    position: absolute; width: 4px; height: 4px;
+    background: var(--gold); border-radius: 50%;
+    animation: particle-up 0.8s ease-out forwards;
+  }
+
+  /* ── Reveal animation ── */
+  @keyframes reveal-card {
+    0% { opacity: 0; transform: scale(0.85) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* ── Result card ── */
+  #screen-result { gap: 1.5rem; }
+
+  .result-card {
+    width: 100%; background: var(--paper);
+    border-radius: 16px; overflow: hidden; color: var(--ink);
+    animation: reveal-card 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .card-header {
+    padding: 1.8rem 1.8rem 1.2rem;
+    background: var(--ink); position: relative;
+  }
+  .card-category {
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 0.6rem; text-transform: uppercase;
+  }
+  .card-personality-label {
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    color: var(--gold-light); margin-bottom: 0.4rem;
+    font-style: italic; opacity: 0.8;
+  }
+
+  .card-trait {
+    font-family: "Noto Serif SC", serif;
+    font-size: 0.85rem; line-height: 1.7;
+    color: var(--vermillion);
+    padding: 0.8rem 1rem; margin-bottom: 0.8rem;
+    background: rgba(192,57,43,0.06);
+    border-left: 2px solid var(--vermillion);
+    border-radius: 0 8px 8px 0; letter-spacing: 0.03em;
+  }
+  .card-name-zh {
+    font-family: "Noto Serif SC", serif;
+    font-size: 2.2rem; font-weight: 900; color: white; line-height: 1.1;
+  }
+  .card-name-sub {
+    font-size: 0.9rem; color: var(--ash); margin-top: 0.3rem; letter-spacing: 0.1em;
+  }
+  .card-emotion-tag {
+    position: absolute; top: 1.8rem; right: 1.8rem;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 20px; padding: 0.3rem 0.8rem;
+    font-size: 0.72rem; color: var(--gold-light); letter-spacing: 0.1em;
+  }
+
+  /* Card visual - premium illustrated area */
+  .card-visual {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .card-visual svg { width: 100%; height: 100%; }
+  /* Real photo card visuals */
+  .card-img-wrap {
+    width: 100%; height: 100%; position: relative; overflow: hidden;
+  }
+  .card-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.7) contrast(1.15) saturate(0.75);
+    transition: filter 0.5s ease;
+  }
+  .card-img-gradient {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .card-img-fallback {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+  }
+
+  .card-body { padding: 1.5rem 1.8rem; }
+  .card-desc {
+    font-size: 0.9rem; line-height: 1.85; color: #3a3530; margin-bottom: 1rem;
+  }
+  .card-dimensions {
+    display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+  }
+  .dim-chip {
+    font-size: 0.65rem; padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    background: rgba(15,14,12,0.06);
+    border: 1px solid rgba(15,14,12,0.1);
+    color: #5a5550; letter-spacing: 0.05em;
+    font-family: "Noto Serif SC", serif;
+  }
+  .card-origin {
+    display: flex; gap: 1.5rem; padding-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.08); flex-wrap: wrap;
+  }
+  .origin-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .origin-label { font-size: 0.62rem; letter-spacing: 0.2em; color: var(--ash); text-transform: uppercase; }
+  .origin-value { font-family: "Noto Serif SC", serif; font-size: 0.9rem; color: var(--ink); font-weight: 700; }
+  .card-color-strip { height: 4px; width: 100%; }
+
+  .card-link {
+    display: inline-block; margin-top: 0.8rem;
+    font-size: 0.78rem; color: var(--vermillion);
+    text-decoration: none; letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(192,57,43,0.3);
+    transition: all 0.2s;
+    font-family: "Noto Serif SC", serif;
+  }
+  .card-link:hover { color: #a93226; border-color: #a93226; }
+
+  /* ── Match reason ── */
+  .match-reason {
+    width: 100%; padding: 1.2rem 1.5rem;
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px; font-size: 0.85rem;
+    line-height: 1.7; color: var(--gold-light);
+  }
+  .match-reason strong { color: var(--gold); font-weight: 400; }
+
+  /* ── Action buttons ── */
+  .action-row { display: flex; gap: 0.8rem; width: 100%; }
+  .btn-secondary {
+    flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 0.8rem; font-size: 0.85rem;
+    color: var(--smoke); cursor: pointer;
+    letter-spacing: 0.08em; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+  .btn-primary {
+    flex: 1; background: var(--vermillion); border: none; border-radius: 8px;
+    padding: 0.8rem; font-size: 0.85rem;
+    font-family: "Noto Serif SC", serif; color: white;
+    cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #a93226; }
+
+  /* ── Loading dots ── */
+  @keyframes dot-bounce {
+    0%,80%,100%{transform:translateY(0)}
+    40%{transform:translateY(-6px)}
+  }
+  .loading-dots { display: flex; gap: 6px; }
+  .loading-dots span {
+    width: 8px; height: 8px; background: var(--gold);
+    border-radius: 50%; animation: dot-bounce 1.2s infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  .error-msg { color: #e88; font-size: 0.82rem; text-align: center; padding: 0.8rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .emotion-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .emotion-btn { padding: 0.9rem 0.4rem; }
+    .card-name-zh { font-size: 1.6rem; }
+    .card-emotion-tag { position: static; display: inline-block; margin-top: 0.6rem; }
+    .card-visual { height: 170px; }
+    .card-img { object-fit: cover; }
+    .card-origin { gap: 0.8rem; }
+    .vibe-grid { gap: 0.4rem; }
+    .vibe-btn { padding: 0.45rem 0.8rem; font-size: 0.75rem; }
+    .lang-grid { gap: 0.6rem; }
+    .lang-btn { padding: 1.5rem 0.8rem; }
+    .box-container { width: 150px; height: 150px; }
+    .box-glyph { font-size: 2rem; }
+  }
+</style>
+<style id="highlight-mengshou-style">
+    .highlight-mengshou-wrap {
+        background: #ff9;
+        cursor: pointer;
+    }
+    .highlight-mengshou-wrap.active {
+        background: #ffb;
+    }
+</style></head>
+<body>
+
+<header>
+  <div class="logo" id="headerLogo">非遗盲盒</div>
+  <div class="tagline" id="headerTagline">今日之物 · 因你而来</div>
+</header>
+
+<div class="lang-badge" id="langBadge">
+  <button data-lang="zh" class="active">中</button>
+  <button data-lang="en">EN</button>
+  <button data-lang="ja">日</button>
+</div>
+
+<main>
+
+  <!-- Screen 0: language -->
+  <div class="screen active" id="screen-lang">
+    <h2 class="prompt"><em data-i18n="lang_title">选择语言</em></h2>
+    <div class="lang-grid">
+      <button class="lang-btn" data-lang="zh"><span class="lang-flag">🏮</span><span class="lang-name">中文</span></button>
+      <button class="lang-btn" data-lang="en"><span class="lang-flag">🌍</span><span class="lang-name">English</span></button>
+      <button class="lang-btn" data-lang="ja"><span class="lang-flag">⛩️</span><span class="lang-name">日本語</span></button>
+    </div>
+  </div>
+
+  <!-- Screen 1: emotion -->
+  <div class="screen" id="screen-emotion">
+    <p class="step-label" data-i18n="step1">第一步</p>
+    <h2 class="prompt" data-i18n="_html emotion_prompt">此刻，你的心情<em>更像</em>哪一种？</h2>
+    <div class="emotion-grid" id="emotionGrid"><button class="emotion-btn" data-emotion="平静" data-key="calm"><span class="emotion-icon">🌙</span><span class="emotion-name">平静</span><span class="emotion-sub">like still water</span></button><button class="emotion-btn" data-emotion="雀跃" data-key="joy"><span class="emotion-icon">🌸</span><span class="emotion-name">雀跃</span><span class="emotion-sub">something good happened</span></button><button class="emotion-btn" data-emotion="怀念" data-key="nostalgic"><span class="emotion-icon">🍂</span><span class="emotion-name">怀念</span><span class="emotion-sub">missing something old</span></button><button class="emotion-btn" data-emotion="疲惫" data-key="tired"><span class="emotion-icon">🌫</span><span class="emotion-name">疲惫</span><span class="emotion-sub">need to rest</span></button><button class="emotion-btn" data-emotion="好奇" data-key="curious"><span class="emotion-icon">✨</span><span class="emotion-name">好奇</span><span class="emotion-sub">want to explore</span></button><button class="emotion-btn" data-emotion="热烈" data-key="passionate"><span class="emotion-icon">🔥</span><span class="emotion-name">热烈</span><span class="emotion-sub">full of energy</span></button></div>
+    <button class="cta" id="toVibeBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+
+  <!-- Screen 2: vibe -->
+  <div class="screen" id="screen-vibe">
+    <p class="step-label" data-i18n="step2">第二步</p>
+    <h2 class="prompt" data-i18n="_html vibe_prompt">你今天更偏向哪种<em>感觉</em>？</h2>
+    <div class="vibe-grid" id="vibeGrid"><button class="vibe-btn" data-vibe="素雅"><span class="vibe-dot" style="background:#c8bfb0"></span>素雅</button><button class="vibe-btn" data-vibe="鲜艳"><span class="vibe-dot" style="background:#c0392b"></span>鲜艳</button><button class="vibe-btn" data-vibe="神秘"><span class="vibe-dot" style="background:#2c3e6b"></span>神秘</button><button class="vibe-btn" data-vibe="自然"><span class="vibe-dot" style="background:#5a7a4a"></span>自然</button><button class="vibe-btn" data-vibe="精致"><span class="vibe-dot" style="background:#c9a84c"></span>精致</button><button class="vibe-btn" data-vibe="朴素"><span class="vibe-dot" style="background:#8b7355"></span>朴素</button></div>
+    <button class="cta" id="toMaterialBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+
+  <!-- Screen 3: material -->
+  <div class="screen" id="screen-material">
+    <p class="step-label" data-i18n="step3">第三步</p>
+    <h2 class="prompt" data-i18n="_html material_prompt">你更偏爱哪种<em>材质</em>的触感？</h2>
+    <div class="vibe-grid" id="materialGrid"><button class="vibe-btn" data-value="🪵 木质">🪵 木质</button><button class="vibe-btn" data-value="🏺 陶瓷">🏺 陶瓷</button><button class="vibe-btn" data-value="🧵 丝织">🧵 丝织</button><button class="vibe-btn" data-value="🪙 金属">🪙 金属</button><button class="vibe-btn" data-value="📜 纸帛">📜 纸帛</button><button class="vibe-btn" data-value="🪨 土石">🪨 土石</button></div>
+    <button class="cta" id="toEraBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+
+  <!-- Screen 4: era -->
+  <div class="screen" id="screen-era">
+    <p class="step-label" data-i18n="step4">第四步</p>
+    <h2 class="prompt" data-i18n="_html era_prompt">如果能穿越，你最想去<em>哪个时代</em>？</h2>
+    <div class="vibe-grid" id="eraGrid"><button class="vibe-btn" data-value="🗿 远古">🗿 远古</button><button class="vibe-btn" data-value="🏯 汉唐">🏯 汉唐</button><button class="vibe-btn" data-value="🌸 宋元">🌸 宋元</button><button class="vibe-btn" data-value="🏮 明清">🏮 明清</button><button class="vibe-btn" data-value="🎩 民国">🎩 民国</button><button class="vibe-btn" data-value="🌆 当代">🌆 当代</button></div>
+    <button class="cta" id="toPurposeBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+
+  <!-- Screen 5: purpose -->
+  <div class="screen" id="screen-purpose">
+    <p class="step-label" data-i18n="step5">第五步</p>
+    <h2 class="prompt" data-i18n="_html purpose_prompt">拿到这件宝物，你最想<em>用它做什么</em>？</h2>
+    <div class="vibe-grid" id="purposeGrid"><button class="vibe-btn" data-value="🖼 装饰观赏">🖼 装饰观赏</button><button class="vibe-btn" data-value="🛠 日常使用">🛠 日常使用</button><button class="vibe-btn" data-value="🎧 静心聆听">🎧 静心聆听</button><button class="vibe-btn" data-value="🎪 表演欣赏">🎪 表演欣赏</button><button class="vibe-btn" data-value="👘 穿戴在身">👘 穿戴在身</button><button class="vibe-btn" data-value="📦 珍藏把玩">📦 珍藏把玩</button></div>
+    <button class="cta" id="toElementBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+
+  <!-- Screen 6: element -->
+  <div class="screen" id="screen-element">
+    <p class="step-label" data-i18n="step6">6/10</p>
+    <h2 class="prompt" data-i18n="_html element_prompt">如果是一种<em>自然元素</em>，你最像什么？</h2>
+    <div class="vibe-grid" id="elementGrid"></div>
+    <button class="cta" id="toAnimalBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+  <div class="screen" id="screen-animal">
+    <p class="step-label" data-i18n="step7">7/10</p>
+    <h2 class="prompt" data-i18n="_html animal_prompt"><em>哪种生灵</em>最懂你的灵魂？</h2>
+    <div class="vibe-grid" id="animalGrid"></div>
+    <button class="cta" id="toHomeBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+  <div class="screen" id="screen-home">
+    <p class="step-label" data-i18n="step8">8/10</p>
+    <h2 class="prompt" data-i18n="_html home_prompt"><em>怎样的居所</em>让你心安？</h2>
+    <div class="vibe-grid" id="homeGrid"></div>
+    <button class="cta" id="toTimeBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+  <div class="screen" id="screen-time">
+    <p class="step-label" data-i18n="step9">9/10</p>
+    <h2 class="prompt" data-i18n="_html time_prompt">你最享受一天中<em>哪个时刻</em>？</h2>
+    <div class="vibe-grid" id="timeGrid"></div>
+    <button class="cta" id="toPhilosophyBtn" disabled="" data-i18n="continue_btn">继续 →</button>
+    <button class="back-btn" onclick="goBack()" data-i18n="back_btn">← 返回</button>
+  </div>
+  <div class="screen" id="screen-philosophy">
+    <p class="step-label" data-i18n="step10">10/10</p>
+    <h2 class="prompt" data-i18n="_html philosophy_prompt">你的<em>处世之道</em>更接近哪一种？</h2>
+    <div class="vibe-grid" id="philosophyGrid"></div>
+    <button class="cta" id="toOpenBtn" disabled="" data-i18n="open_btn">开箱 →</button>
+  </div>
+
+  <!-- Screen 11: box open (5 taps) -->
+  <div class="screen" id="screen-open">
+    <p class="step-label" data-i18n="box_ready">你的非遗盲盒已备好</p>
+    <div class="box-wrapper">
+      <div class="tap-progress" id="tapProgress">
+        <span class="tap-dot current"></span>
+        <span class="tap-dot"></span>
+        <span class="tap-dot"></span>
+        <span class="tap-dot"></span>
+        <span class="tap-dot"></span>
+      </div>
+      <div class="box-container" id="boxContainer">
+        <div class="box" id="theBox"><span class="box-glyph" id="boxGlyph">物</span></div>
+        <div class="box-hint" id="boxHint" data-i18n="click_open">轻敲五次，揭示宝物</div>
+      </div>
+      <div class="hint-text" id="hintText"></div>
+      <div class="loading-dots" id="loadingDots" style="display:none"><span></span><span></span><span></span></div>
+      <div class="error-msg" id="errorMsg" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- Screen 4: result -->
+  <div class="screen" id="screen-result">
+    <div class="result-card" id="resultCard"></div>
+    <div class="match-reason" id="matchReason"></div>
+    <div class="action-row">
+      <button class="btn-secondary" id="restartBtn" data-i18n="retry_btn">再抽一次</button>
+      <button class="btn-primary" id="shareBtn" data-i18n="share_btn">分享这件物</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ============================================================
+   非遗盲盒 · 5次点击抽卡 · 精致SVG卡牌 · 中英日三语
+   ============================================================ */
+
+// ── i18n ──
+const I18N = {
+  zh: {
+    greeting:"你好", lang_title:"选择语言",
+    step1:"1/10", step2:"2/10", step3:"3/10", step4:"4/10", step5:"5/10",
+    step6:"6/10", step7:"7/10", step8:"8/10", step9:"9/10", step10:"10/10",
+    emotion_prompt:"此刻，你的心情<em>更像</em>哪一种？",
+    vibe_prompt:"你今天更偏向哪种<em>感觉</em>？",
+    material_prompt:"你更偏爱哪种<em>材质</em>的触感？",
+    era_prompt:"如果能穿越，你最想去<em>哪个时代</em>？",
+    purpose_prompt:"拿到一件宝物，你最想<em>用它做什么</em>？",
+    element_prompt:"如果是一种<em>自然元素</em>，你最像什么？",
+    animal_prompt:"<em>哪种生灵</em>最懂你的灵魂？",
+    home_prompt:"<em>怎样的居所</em>让你心安？",
+    time_prompt:"你最享受一天中<em>哪个时刻</em>？",
+    philosophy_prompt:"你的<em>处世之道</em>更接近哪一种？",
+    continue_btn:"继续 →", open_btn:"开箱 →",
+    back_btn:"← 返回",
+    box_ready:"你的非遗盲盒已备好",
+    click_open:"轻敲五次，揭示宝物", opening:"正在开启...",
+    tap_hint:["再敲一次……","有什么要出现了……","快了……","马上揭晓……"],
+    retry_btn:"再抽一次", share_btn:"分享这件物",
+    origin_label:"发源地", history_label:"历史", match_label:"今日匹配",
+    why_title:"为什么是它？",
+    share_text:"我是「{name}」型人格 ✨ #HeritageMe #非遗型人格",
+    toast_copied:"已复制到剪贴板 📋", error_msg:"开箱失败，请重试",
+    personality_label:"型人格",
+    heritage_me_label:"Heritage Me · 非遗型人格",
+    header_logo:"Heritage Me", header_tagline:"Find Yourself Through Heritage · 非遗型人格",
+    emotions:[
+      {emoji:"🌙",name:"平静",sub:"",key:"calm"},
+      {emoji:"🌸",name:"雀跃",sub:"",key:"joy"},
+      {emoji:"🍂",name:"怀念",sub:"",key:"nostalgic"},
+      {emoji:"🌫",name:"疲惫",sub:"",key:"tired"},
+      {emoji:"✨",name:"好奇",sub:"",key:"curious"},
+      {emoji:"🔥",name:"热烈",sub:"",key:"passionate"}
+    ],
+    vibes:["素雅","鲜艳","神秘","自然","精致","朴素"],
+    cat_names:{"传统工艺":"传统工艺","民间艺术":"民间艺术","传统技艺":"传统技艺","传统音乐":"传统音乐"},
+    about:"约",
+    materials:["🪵 木质","🏺 陶瓷","🧵 丝织","🪙 金属","📜 纸帛","🪨 土石"],
+    eras:["🗿 远古","🏯 汉唐","🌸 宋元","🏮 明清","🎩 民国","🌆 当代"],
+    purposes:["🖼 装饰观赏","🛠 日常使用","🎧 静心聆听","🎪 表演欣赏","👘 穿戴在身","📦 珍藏把玩"],
+    elements:["🌬 风","🔥 火","💧 水","🌍 土","⚜️ 金","🌿 木"],
+    animals:["🦩 鹤","🐅 虎","🦋 蝶","🐢 龟","🐉 龙","🦌 鹿"],
+    homes:["⛰ 山水之间","🏙 繁华市井","🌾 静谧田园","🎨 艺术工坊","🏯 古老庭院","☁ 云端之上"],
+    times:["🌅 清晨","☀ 正午","🌇 黄昏","🌙 深夜","⏳ 永恒"],
+    philosophies:["💪 刚柔并济","🎲 随心所欲","♟ 步步为营","🌊 顺势而为","🦄 特立独行","⚪ 大道至简"]
+  },
+  en: {
+    greeting:"Hello", lang_title:"Choose Language",
+    step1:"1/10", step2:"2/10", step3:"3/10", step4:"4/10", step5:"5/10",
+    step6:"6/10", step7:"7/10", step8:"8/10", step9:"9/10", step10:"10/10",
+    emotion_prompt:"Right now, which <em>mood</em> fits you best?",
+    vibe_prompt:"What kind of <em>feeling</em> are you drawn to?",
+    material_prompt:"Which <em>material</em> texture do you love most?",
+    era_prompt:"If you could time-travel, which <em>era</em> would you visit?",
+    purpose_prompt:"What would you most like to <em>do</em> with this treasure?",
+    element_prompt:"If you were a <em>natural element</em>, which one?",
+    animal_prompt:"Which <em>creature</em> best understands your soul?",
+    home_prompt:"What kind of <em>home</em> makes you feel at peace?",
+    time_prompt:"Which <em>moment of the day</em> do you love most?",
+    philosophy_prompt:"What's your <em>approach to life</em>?",
+    continue_btn:"Continue →", open_btn:"Open Box →",
+    back_btn:"← Back",
+    box_ready:"Your ICH mystery box is ready",
+    click_open:"Tap five times to reveal the treasure", opening:"Opening...",
+    tap_hint:["Tap again...","Something is emerging...","Almost...","Here it comes..."],
+    retry_btn:"Try Again", share_btn:"Share",
+    origin_label:"Origin", history_label:"History", match_label:"Today's Match",
+    why_title:"Why this?",
+    share_text:"I'm a 「{name}」 personality ✨ #HeritageMe #ICHType",
+    toast_copied:"Copied! 📋", error_msg:"Failed to open. Please retry.",
+    personality_label:"Type",
+    heritage_me_label:"Heritage Me · Your ICH Type",
+    header_logo:"Heritage Me", header_tagline:"Find Yourself Through Heritage · Your ICH Personality",
+    emotions:[
+      {emoji:"🌙",name:"Calm",sub:"like still water",key:"calm"},
+      {emoji:"🌸",name:"Joyful",sub:"something good happened",key:"joy"},
+      {emoji:"🍂",name:"Nostalgic",sub:"missing something old",key:"nostalgic"},
+      {emoji:"🌫",name:"Tired",sub:"need to rest",key:"tired"},
+      {emoji:"✨",name:"Curious",sub:"want to explore",key:"curious"},
+      {emoji:"🔥",name:"Passionate",sub:"full of energy",key:"passionate"}
+    ],
+    vibes:["Elegant","Vivid","Mysterious","Natural","Refined","Rustic"],
+    cat_names:{"传统工艺":"Traditional Craft","民间艺术":"Folk Art","传统技艺":"Traditional Skill","传统音乐":"Traditional Music"},
+    about:"approx.",
+    materials:["🪵 Wood","🏺 Ceramic","🧵 Silk","🪙 Metal","📜 Paper","🪨 Clay"],
+    eras:["🗿 Ancient","🏯 Han-Tang","🌸 Song-Yuan","🏮 Ming-Qing","🎩 Republic","🌆 Modern"],
+    purposes:["🖼 Decorate","🛠 Daily Use","🎧 Listen","🎪 Watch","👘 Wear","📦 Collect"],
+    elements:["🌬 Wind","🔥 Fire","💧 Water","🌍 Earth","⚜️ Metal","🌿 Wood"],
+    animals:["🦩 Crane","🐅 Tiger","🦋 Butterfly","🐢 Turtle","🐉 Dragon","🦌 Deer"],
+    homes:["⛰ Mountains","🏙 City","🌾 Countryside","🎨 Art Studio","🏯 Courtyard","☁ Above Clouds"],
+    times:["🌅 Dawn","☀ Noon","🌇 Dusk","🌙 Midnight","⏳ Eternity"],
+    philosophies:["💪 Balanced","🎲 Free Flow","♟ Methodical","🌊 Adaptive","🦄 Independent","⚪ Essential"]
+  },
+  ja: {
+    greeting:"こんにちは", lang_title:"言語を選ぶ",
+    step1:"1/10", step2:"2/10", step3:"3/10", step4:"4/10", step5:"5/10",
+    step6:"6/10", step7:"7/10", step8:"8/10", step9:"9/10", step10:"10/10",
+    emotion_prompt:"いまの<em>気持ち</em>に近いのはどれ？",
+    vibe_prompt:"今日はどんな<em>雰囲気</em>に惹かれる？",
+    material_prompt:"<em>素材</em>の手ざわり、どれが好き？",
+    era_prompt:"行けるなら<em>どの時代</em>に行ってみたい？",
+    purpose_prompt:"宝物を手に入れたら<em>どう使う</em>？",
+    element_prompt:"あなたを<em>自然の力</em>にたとえるなら？",
+    animal_prompt:"<em>魂が共鳴する生き物</em>はどれ？",
+    home_prompt:"<em>心が安らぐ場所</em>はどんなところ？",
+    time_prompt:"一日でいちばん好きな<em>時間帯</em>は？",
+    philosophy_prompt:"人生で大切にしている<em>信念</em>は？",
+    continue_btn:"次へ →", open_btn:"開ける →",
+    back_btn:"← 戻る",
+    box_ready:"あなたの無形文化遺産ボックス",
+    click_open:"5回タップで宝物を出現", opening:"開封中...",
+    tap_hint:["もう一度…","何かが姿を現しそう…","あと少し…","来る…！"],
+    retry_btn:"やり直す", share_btn:"画像を保存",
+    origin_label:"発祥地", history_label:"歴史", match_label:"マッチ度",
+    why_title:"なぜあなたに？",
+    share_text:"私は「{name}」タイプです ✨ #HeritageMe #無形文化遺産タイプ",
+    toast_copied:"コピーしました 📋", error_msg:"エラーが発生しました。もう一度お試しください。",
+    personality_label:"タイプ",
+    heritage_me_label:"Heritage Me · 無形文化遺産パーソナリティ",
+    header_logo:"Heritage Me", header_tagline:"Find Yourself Through Heritage · あなたの無形文化遺産パーソナリティ",
+    emotions:[
+      {emoji:"🌙",name:"穏やか",sub:"静かな水面のように",key:"calm"},
+      {emoji:"🌸",name:"嬉しい",sub:"いいことがあった",key:"joy"},
+      {emoji:"🍂",name:"懐かしい",sub:"昔を思い出す",key:"nostalgic"},
+      {emoji:"🌫",name:"疲れた",sub:"休息が必要",key:"tired"},
+      {emoji:"✨",name:"好奇心",sub:"探検したい気分",key:"curious"},
+      {emoji:"🔥",name:"情熱的",sub:"エネルギー満タン",key:"passionate"}
+    ],
+    vibes:["素朴","鮮やか","神秘的","自然","繊細","無駄のない"],
+    cat_names:{"传统工艺":"伝統工芸","民间艺术":"民間芸術","传统技艺":"伝統技術","传统音乐":"伝統音楽"},
+    about:"約",
+    materials:["🪵 木材","🏺 陶磁器","🧵 絹織物","🪙 金属","📜 紙","🪨 土"],
+    eras:["🗿 古代","🏯 漢唐","🌸 宋元","🏮 明清","🎩 民国","🌆 現代"],
+    purposes:["🖼 飾る","🛠 日常使い","🎧 聴く","🎪 観る","👘 身につける","📦 収集する"],
+    elements:["🌬 風","🔥 火","💧 水","🌍 土","⚜️ 金","🌿 木"],
+    animals:["🦩 鶴","🐅 虎","🦋 蝶","🐢 亀","🐉 龍","🦌 鹿"],
+    homes:["⛰ 山水の間","🏙 繁華街","🌾 静かな田園","🎨 アート工房","🏯 古い庭園","☁ 雲の上"],
+    times:["🌅 早朝","☀ 正午","🌇 黄昏","🌙 深夜","⏳ 永遠"],
+    philosophies:["💪 柳に雪折れなし","🎲 なるようになる","♟ 石の上にも三年","🌊 流れに身を任せ","🦄 我が道を行く","⚪ 足るを知る"]
+  }
+};
+
+// ── Heritage Database with hints ──
+const heritageDB = [
+{ id:1, name_zh:"青花瓷", name_en:"Blue-and-White Porcelain", name_ja:"青花（セイカ）",
+  category:"传统工艺", bg_color:"#2c5f8a",
+  desc_zh:"白瓷为底，钴蓝作画，一笔一划间凝固了千年烟雨。那幽蓝的花纹，像江南的水墨慢慢晕开，安静却有力。",
+  desc_en:"White porcelain painted with cobalt blue — a thousand years of mist and rain captured in every stroke. The quiet blue patterns bloom like ink-wash paintings, powerful in their stillness.",
+  desc_ja:"白磁にコバルトブルーで描かれた千年の物語。江南の水墨画のように静かに、しかし力強く広がる青い文様。",
+  origin:"江西景德镇", origin_en:"Jingdezhen, Jiangxi", origin_ja:"江西省景徳鎮", history:1300,
+  emotions:["平静","穏やか","Calm"], vibes:["素雅","素朴","Elegant","精致","繊細","Refined"],
+  materials:["ceramic","silk"], eras:["mingqing","songyuan"], purposes:["decorate","collect"],
+  hints_zh:["来自江南瓷都","以蓝白二色惊艳世界","一千三百年的炉火不熄","每一笔都是时间的痕迹"],
+  hints_en:["From the porcelain capital of Jiangnan","Stunning in blue and white","Kilns burning for 1,300 years","Every stroke is a trace of time"],
+  hints_ja:["江南の陶磁器の都から","青と白で世界を魅了","千三百年の窯の火","一筆一筆が時の痕跡"],
+  match_reason:{ calm:"你此刻的安静如水，正如青花瓷上的钴蓝——不张扬，却有深不见底的力量。", calm_en:"Your calm is like cobalt blue on porcelain — quiet yet infinitely deep.", calm_ja:"あなたの静けさは青花のコバルトブルーのよう。千年の時を経たこの器が、その静けさを守ります。", default:"青花瓷的沉静与优雅，恰好呼应了你当下的心境。不喧哗，自成世界。", default_en:"The quiet elegance of blue-and-white porcelain mirrors your state of mind.", default_ja:"青花の静けさと優雅さが、あなたの今の心にぴったり。" }
+},
+{ id:2, name_zh:"皮影", name_en:"Shadow Puppetry", name_ja:"影絵人形（カゲエニンギョウ）",
+  category:"民间艺术", bg_color:"#8b2500",
+  desc_zh:"一张牛皮，几把刻刀，灯火摇曳间，影子就有了灵魂。当锣鼓声起，那些彩色的皮影人便在幕布上活了过来，讲述古老的故事。",
+  desc_en:"Cowhide, a carving knife, and flickering lamplight — shadows come alive. When the drums roll, colorful puppets dance behind the screen, telling ancient tales.",
+  desc_ja:"一枚の牛皮、数本の彫刻刀、揺れる灯火——影が魂を持つ瞬間。太鼓が響けば、色とりどりの影絵人形が幕の上で蘇る。",
+  origin:"陕西华县", origin_en:"Huaxian, Shaanxi", origin_ja:"陕西省華県", history:2000,
+  emotions:["好奇","好奇心","Curious","雀跃","嬉しい","Joyful","热烈","情熱的","Passionate"],
+  vibes:["鲜艳","鮮やか","Vivid","神秘","神秘的","Mysterious"],
+  materials:["paper","wood"], eras:["republic","mingqing"], purposes:["watch","decorate"],
+  hints_zh:["来自黄土高原","在灯光下才能看见它的灵魂","两千年的光影游戏","锣鼓一响，故事开场"],
+  hints_en:["From the Loess Plateau","Only visible under lamplight","Two millennia of shadow play","Drums roll — the story begins"],
+  hints_ja:["黄土高原から","灯りの下でしか見えない魂","二千年の光と影の遊び","太鼓が響けば物語の幕開け"],
+  match_reason:{ curious:"皮影戏里藏着另一个世界——光和影的游戏，像极了你此刻探索未知的好奇心。", curious_en:"Shadow puppetry hides another world — a game of light and shadow, just like your curiosity.", curious_ja:"影絵芝居にはもう一つの世界が隠れている。光と影の遊びは、あなたの好奇心そのもの。", default:"皮影的光影世界，充满戏剧与可能，正等待一个像你这样充满探索精神的人来发现。", default_en:"The world of light and shadow awaits your spirit of discovery.", default_ja:"光と影の世界は、あなたのような探求心を持つ人を待っている。" }
+},
+{ id:3, name_zh:"蜀锦", name_en:"Shu Brocade", name_ja:"蜀錦（ショッキン）",
+  category:"传统工艺", bg_color:"#c0392b",
+  desc_zh:"丝线在织机上穿梭，经纬交织成繁复的图案。蜀锦是时间织出来的诗，每一寸都藏着唐代的繁华与蜀地的温润。",
+  desc_en:"Silk threads shuttle through the loom, weaving intricate patterns. Shu brocade is poetry woven by time — every inch holds the splendor of Tang dynasty.",
+  desc_ja:"絹糸が織機を行き交い、複雑な文様を織り成す。蜀錦は時が織り上げた詩——一吋ごとに唐の繁栄と蜀の温もりが宿る。",
+  origin:"四川成都", origin_en:"Chengdu, Sichuan", origin_ja:"四川省成都", history:2000,
+  emotions:["热烈","情熱的","Passionate","雀跃","嬉しい","Joyful","怀念","懐かしい","Nostalgic"],
+  vibes:["精致","繊細","Refined","鲜艳","鮮やか","Vivid"],
+  materials:["silk","metal"], eras:["hantang","mingqing"], purposes:["wear","decorate"],
+  hints_zh:["天府之国的瑰宝","丝线穿梭两千年的传奇","每一寸都是唐代的繁华","织机上的诗篇"],
+  hints_en:["Treasure of the Land of Abundance","Silk threads weaving a 2,000-year legend","Every inch holds Tang dynasty splendor","A poem on the loom"],
+  hints_ja:["天府の国の宝","絹糸が織る二千年の伝説","一吋ごとに唐の繁栄","織機の上の詩"],
+  match_reason:{ passionate:"蜀锦的每一根丝线都经历过千万次穿梭才成就华美，就像你此刻饱满的热情。", passionate_en:"Every thread traveled a thousand journeys to become splendid — just like your passion.", passionate_ja:"どの絹糸も何千回もの往復を経て美しくなる。あなたの情熱と同じように。", default:"蜀锦的华美与精致，正如你此刻丰富的内心世界。", default_en:"The splendor of Shu brocade reflects your inner richness.", default_ja:"蜀錦の華やかさと繊細さは、今のあなたの豊かな内面そのもの。" }
+},
+{ id:4, name_zh:"古琴", name_en:"Guqin", name_ja:"古琴（コキン）",
+  category:"传统音乐", bg_color:"#1a1a2e",
+  desc_zh:"七弦之上，有高山流水，有月白风清。古琴不追逐喧哗，它的声音是用来听的，也是用来养的——养心，养性，养时光。",
+  desc_en:"Seven strings carry mountains and rivers, moonlight and gentle breezes. The guqin doesn't chase noise — its sound is for listening, and for nourishing the soul.",
+  desc_ja:"七弦の上に、高山流水、月明かりと清風。古琴は喧騒を追わない。その音は聴くためのもの、そして心を養い、時を養うためのもの。",
+  origin:"中国", origin_en:"China", origin_ja:"中国", history:3000,
+  emotions:["平静","穏やか","Calm","疲惫","疲れた","Tired"],
+  vibes:["素雅","素朴","Elegant","朴素","素朴感","Rustic","神秘","神秘的","Mysterious"],
+  materials:["wood","silk"], eras:["ancient","hantang"], purposes:["listen","decorate"],
+  hints_zh:["三千年未曾断过的琴音","无需言说，自有回响","古人以琴养心","七弦之间，天地宽阔"],
+  hints_en:["An unbroken melody for 3,000 years","No words needed — it echoes on its own","Nourishing the soul through music","Between seven strings lies the universe"],
+  hints_ja:["三千年途絶えぬ琴の音","言葉なくとも響くもの","琴で心を養う","七弦の間に広がる天地"],
+  match_reason:{ calm:"古琴声起，万事皆静。你这一刻的平和，正是古琴等待了三千年的知音。", calm_en:"When the guqin plays, everything falls silent. Your peace is what it's waited 3000 years to find.", calm_ja:"古琴の音が響けば、すべてが静まる。あなたのこの穏やかさこそ、琴が三千年待ち望んだ知音。", default:"古琴不求所有人都懂它，它只等那个真正静下心来聆听的人。", default_en:"The guqin waits for the one who will truly listen. Today, that person is you.", default_ja:"古琴は、本当に静かに耳を傾ける人を待つ。今日、その人はあなた。" }
+},
+{ id:5, name_zh:"扎染", name_en:"Tie-Dye", name_ja:"絞り染め（シボリゾメ）",
+  category:"传统技艺", bg_color:"#2c3e6b",
+  desc_zh:"捆扎、浸染、拆线——每一次展开都是一场意外。蓝靛在白布上留下独一无二的纹路，像天上的云，又像海里的浪。",
+  desc_en:"Tie, dye, untie — every unfolding is a surprise. Indigo leaves one-of-a-kind patterns on white cloth, like clouds in the sky, like waves in the sea.",
+  desc_ja:"括って、染めて、解く——広げるたびに一期一会の驚き。藍が白布に残す唯一無二の模様。",
+  origin:"云南大理", origin_en:"Dali, Yunnan", origin_ja:"雲南省大理", history:1500,
+  emotions:["好奇","好奇心","Curious","平静","穏やか","Calm"],
+  vibes:["自然","自然的","Natural","朴素","素朴感","Rustic","神秘","神秘的","Mysterious"],
+  materials:["silk","paper"], eras:["hantang","songyuan"], purposes:["decorate","wear"],
+  hints_zh:["来自苍山洱海之间","一块布与蓝靛的对话","拆开之前，答案未知","一千五百年的染色智慧"],
+  hints_en:["From the land of Cangshan and Erhai","A dialogue between cloth and indigo","Unfold to find the answer","1,500 years of dyeing wisdom"],
+  hints_ja:["蒼山と洱海の間から","布と藍の対話","解くまで答えはわからない","千五百年の染色の知恵"],
+  match_reason:{ curious:"扎染最妙的地方在于——拆开之前，你永远不知道会看到什么图案。", curious_en:"The magic of tie-dye — you never know what pattern you'll see until you unfold it.", curious_ja:"絞り染めの醍醐味——解くまでどんな模様が出るか誰にもわからない。", default:"扎染的不确定性，是它最有魅力的地方。每一次展开，都是惊喜。", default_en:"Every unfolding is a surprise.", default_ja:"広げるたびに、驚きがある。" }
+},
+{ id:6, name_zh:"剪纸", name_en:"Paper Cutting", name_ja:"切り紙（キリガミ）",
+  category:"民间艺术", bg_color:"#c0392b",
+  desc_zh:"一张红纸，一把剪刀，翻转折叠间，万物跃然纸上。窗花、生肖、祥云——剪纸是最朴素的祝愿，也是最浓烈的喜庆。",
+  desc_en:"A sheet of red paper, a pair of scissors — fold, cut, unfold, and everything springs to life. The simplest blessing and the most vivid celebration.",
+  desc_ja:"一枚の赤い紙、一丁の鋏——折って、切って、開けば、万物が紙の上に躍り出る。",
+  origin:"陕西、山西", origin_en:"Shaanxi & Shanxi", origin_ja:"陝西省・山西省", history:1500,
+  emotions:["雀跃","嬉しい","Joyful","热烈","情熱的","Passionate"],
+  vibes:["鲜艳","鮮やか","Vivid","精致","繊細","Refined"],
+  materials:["paper"], eras:["mingqing","republic"], purposes:["decorate","watch"],
+  hints_zh:["黄土地上的红色祝福","一把剪刀的魔法","贴在窗上的期待","一千五百年的手温"],
+  hints_en:["A red blessing from the yellow earth","The magic of a pair of scissors","Expectations pasted on the window","1,500 years of hand warmth"],
+  hints_ja:["黄土の上の赤い祝福","一丁の鋏の魔法","窓に貼る期待","千五百年の手の温もり"],
+  match_reason:{ joy:"红色剪纸是中国人最直白的快乐——贴在窗上，就是一份对好日子的期待。", joy_en:"Red paper cuts are the most direct expression of joy.", joy_ja:"赤い切り紙は最も率直な喜び——窓に貼れば、良き日への期待。", default:"剪纸的每一刀都是心意，像极了你此刻期待美好的心情。", default_en:"Every cut carries intention — like your heart anticipating beauty.", default_ja:"切り紙の一刀一刀に心がこもる。" }
+},
+{ id:7, name_zh:"紫砂壶", name_en:"Yixing Teapot", name_ja:"紫砂急須（シサキュウス）",
+  category:"传统工艺", bg_color:"#6b3a2a",
+  desc_zh:"宜兴的泥土，在匠人手中变成温润的器皿。紫砂壶不只是一个壶，它记得每一泡茶的滋味，越用越有灵气。",
+  desc_en:"Yixing clay, shaped by artisan hands into a warm vessel. It remembers every brew, growing more soulful with use.",
+  desc_ja:"宜興の土が、職人の手で温もりのある器に。一煎ごとの味を記憶し、使うほどに霊気を帯びる。",
+  origin:"江苏宜兴", origin_en:"Yixing, Jiangsu", origin_ja:"江蘇省宜興", history:1000,
+  emotions:["平静","穏やか","Calm","疲惫","疲れた","Tired","怀念","懐かしい","Nostalgic"],
+  vibes:["朴素","素朴感","Rustic","素雅","素朴","Elegant"],
+  materials:["earth","wood"], eras:["mingqing","songyuan"], purposes:["use","collect"],
+  hints_zh:["江南水乡的泥土馈赠","用得越久越有灵气","记得每一泡茶的滋味","千年的泡茶之道"],
+  hints_en:["A clay gift from Jiangnan","Grows more soulful the longer you use it","Remembers every brew","A thousand years of tea wisdom"],
+  hints_ja:["江南の水郷からの土の贈り物","使うほどに霊気を帯びる","一煎ごとの味を記憶する","千年のお茶の道"],
+  match_reason:{ calm:"一只好壶，需要时间来养。你此刻的平静，就是最好的养壶之水。", calm_en:"A good teapot needs time to season. Your calm is the best water to nurture it.", calm_ja:"良い急須は、時間をかけて育てるもの。あなたの今の穏やかさが、最高の養壺の水。", default:"紫砂壶懂得等待，也懂得陪伴。今天，它为你而温。", default_en:"It understands waiting, and companionship. Today, it warms for you.", default_ja:"紫砂の急須は待つことを知り、寄り添うことを知っている。" }
+},
+{ id:8, name_zh:"风筝", name_en:"Kite", name_ja:"凧（タコ）",
+  category:"民间艺术", bg_color:"#5b8c5a",
+  desc_zh:"竹骨纸衣，一线牵天。风筝是地上的人写给天空的诗，每一只都带着奔跑的风和仰望的梦想。",
+  desc_en:"Bamboo bones, paper skin, one string to the sky. A kite is a poem written by those on earth to the heavens.",
+  desc_ja:"竹骨に紙衣、一本の糸が天を繋ぐ。凧は地上の人が空に宛てた詩。",
+  origin:"山东潍坊", origin_en:"Weifang, Shandong", origin_ja:"山東省濰坊", history:2000,
+  emotions:["雀跃","嬉しい","Joyful","好奇","好奇心","Curious","热烈","情熱的","Passionate"],
+  vibes:["自然","自然的","Natural","鲜艳","鮮やか","Vivid"],
+  materials:["paper","wood"], eras:["mingqing","modern"], purposes:["watch","decorate"],
+  hints_zh:["来自风筝之都","借着风，飞向两千年前的天空","竹与纸的飞翔梦","潍坊的风一直在等它"],
+  hints_en:["From the kite capital","On the wind, soaring back 2,000 years","A flying dream of bamboo and paper","Weifang's wind has been waiting"],
+  hints_ja:["凧の都から","風に乗って二千年前の空へ","竹と紙の飛翔の夢","濰坊の風が待っている"],
+  match_reason:{ joy:"风筝最美的时刻，是迎着风往上冲的那一瞬间。你今天的雀跃，就该这样放飞。", joy_en:"A kite's most beautiful moment is charging upward into the wind. Let your joy soar.", joy_ja:"凧の最も美しい瞬間は、風に向かって上昇するその一瞬。あなたの嬉しさも解き放とう。", default:"风筝的使命就是飞翔，而你的心情，今天正好有风。", default_en:"A kite's purpose is to fly — and your mood has just the right wind.", default_ja:"凧の使命は飛ぶこと。そしてあなたの今日の気分には、ちょうどいい風が吹いている。" }
+},
+{ id:9, name_zh:"榫卯", name_en:"Mortise & Tenon", name_ja:"組木（クミキ）",
+  category:"传统技艺", bg_color:"#8b7355",
+  desc_zh:"不用一根钉子，木头和木头自己咬合在一起。榫卯是木作里的哲学——以柔克刚，相互成全，一立就是千年。",
+  desc_en:"Not a single nail — wood locks into wood. The philosophy of carpentry: softness overcomes hardness, each part completes the other, standing for millennia.",
+  desc_ja:"釘は一本も使わず、木と木が自ら噛み合う。組木は木工の哲学——柔よく剛を制し、互いに支え合い、千年立ち続ける。",
+  origin:"中国", origin_en:"China", origin_ja:"中国", history:7000,
+  emotions:["平静","穏やか","Calm","怀念","懐かしい","Nostalgic"],
+  vibes:["朴素","素朴感","Rustic","精致","繊細","Refined"],
+  materials:["wood"], eras:["ancient","hantang"], purposes:["use","decorate"],
+  hints_zh:["不用一颗钉子的智慧","七千年前就已完美咬合","木头有自己的语言","以柔克刚的最高境界"],
+  hints_en:["Wisdom without a single nail","Perfect joinery since 7,000 years ago","Wood has its own language","The highest art of softness over hardness"],
+  hints_ja:["一本の釘も使わない知恵","七千年前から完璧な噛み合わせ","木には自分の言葉がある","柔よく剛を制する最高の境地"],
+  match_reason:{ calm:"榫卯不喧嚣，不争抢，只是安静地把两个部件契合在一起。", calm_en:"Mortise and tenon makes no noise — it just quietly fits two pieces together.", calm_ja:"組木は騒がず、ただ静かに二つの部材を噛み合わせる。", default:"榫卯教我们：最好的关系不是谁压倒谁，而是刚好合适。", default_en:"The best relationship isn't about dominance, but about fitting just right.", default_ja:"最良の関係は、どちらかが相手を押さえつけることではなく、ちょうど良く合うこと。" }
+},
+{ id:10, name_zh:"苏绣", name_en:"Suzhou Embroidery", name_ja:"蘇繍（ソシュウ）",
+  category:"传统工艺", bg_color:"#b8865e",
+  desc_zh:"一根丝线劈成十六份，针脚细过发丝。苏绣不是在布上画画，而是用丝线写诗——小猫的绒毛、金鱼的鳞片，都活在针尖之下。",
+  desc_en:"A single silk thread split into sixteen strands, stitches finer than hair. Suzhou embroidery writes poetry with silk — a kitten's fur, a goldfish's scales, all alive beneath the needle.",
+  desc_ja:"一本の絹糸を十六に割り、縫い目は髪より細く。蘇繍は布に絵を描くのではない——絹糸で詩を綴るのだ。",
+  origin:"江苏苏州", origin_en:"Suzhou, Jiangsu", origin_ja:"江蘇省蘇州", history:2000,
+  emotions:["平静","穏やか","Calm","怀念","懐かしい","Nostalgic","好奇","好奇心","Curious"],
+  vibes:["精致","繊細","Refined","素雅","素朴","Elegant"],
+  materials:["silk","paper"], eras:["mingqing","songyuan"], purposes:["decorate","wear"],
+  hints_zh:["江南绣娘的指尖魔法","一根丝线劈成十六份","比头发还细的针脚","绣了整整两千年"],
+  hints_en:["The magic of Jiangnan embroiderers' fingertips","A thread split into sixteen strands","Stitches finer than hair","Embroidered for two millennia"],
+  hints_ja:["江南の刺繍職人の指先の魔法","一本の糸を十六に割る","髪より細い縫い目","二千年縫い続けて"],
+  match_reason:{ calm:"苏绣需要一双安静的手和一颗更安静的心。你今天的平静，刚好够用。", calm_en:"Suzhou embroidery needs steady hands and a steadier heart. Your calm is just right.", calm_ja:"蘇繍には静かな手とさらに静かな心が必要。あなたの穏やかさは十分。", default:"苏绣以精致见长，正如你今天细腻而丰富的心情。", default_en:"Suzhou embroidery excels in refinement — like your nuanced mood today.", default_ja:"蘇繍は繊細さを誇る——それはあなたの今日のきめ細やかな気持ちそのもの。" }
+},
+{ id:11, name_zh:"泥人张", name_en:"Clay Figurine Zhang", name_ja:"泥人形（ドロニンギョウ）",
+  category:"民间艺术", bg_color:"#c8a96e",
+  desc_zh:"一团彩泥，在手心里揉捏出世间百态。天津泥人张的每个人物都有自己的性格——憨厚的、俏皮的、慈祥的，仿佛下一秒就要开口说话。",
+  desc_en:"A lump of colored clay, kneaded into all walks of life. Every figure has its own personality — simple, cheeky, kind — as if about to speak.",
+  desc_ja:"一握りの色土が、手のひらで揉まれて世の百態に。それぞれに性格がある——今にも口を開きそうな。",
+  origin:"天津", origin_en:"Tianjin", origin_ja:"天津", history:200,
+  emotions:["好奇","好奇心","Curious","雀跃","嬉しい","Joyful","疲惫","疲れた","Tired"],
+  vibes:["鲜艳","鮮やか","Vivid","精致","繊細","Refined"],
+  materials:["earth"], eras:["republic","modern"], purposes:["watch","collect"],
+  hints_zh:["天津卫的市井烟火","让泥巴活过来的手艺","两百年前的街头艺术","每个人物都有自己的性格"],
+  hints_en:["The marketplace spirit of Tianjin","The craft of bringing clay to life","Street art from 200 years ago","Every figure has personality"],
+  hints_ja:["天津の市井の烟火","泥に命を吹き込む技","二百年前の街頭芸術","それぞれに性格がある"],
+  match_reason:{ curious:"泥人张最厉害的本事，是让泥巴活过来。你好奇的眼睛，一定能发现这些小人儿的秘密。", curious_en:"Clay Figurine Zhang's greatest skill is bringing clay to life.", curious_ja:"泥人形の最大の技は、泥に命を吹き込むこと。", default:"泥人张的幽默和温暖，是给今天的你最好的小礼物。", default_en:"Its humor and warmth is the best little gift for you today.", default_ja:"泥人形のユーモアと温かさは、今日のあなたへの最高のささやかな贈り物。" }
+},
+{ id:12, name_zh:"竹编", name_en:"Bamboo Weaving", name_ja:"竹細工（タケザイク）",
+  category:"传统技艺", bg_color:"#5a7a4a",
+  desc_zh:"竹子破开，削成薄片，指尖翻飞间编出篮、篓、席、扇……竹编是山林赠与的生活智慧，有竹的韧性，也有手的温度。",
+  desc_en:"Bamboo split into thin strips, fingertips weaving baskets, mats, and fans. The mountain's gift of living wisdom — the resilience of bamboo, the warmth of human hands.",
+  desc_ja:"竹を割り、薄片に削ぎ、指先が舞って籠や敷物や扇を編み上げる。竹細工は山林からの暮らしの知恵。",
+  origin:"浙江东阳、四川", origin_en:"Dongyang & Sichuan", origin_ja:"浙江省東陽・四川省", history:5000,
+  emotions:["疲惫","疲れた","Tired","平静","穏やか","Calm"],
+  vibes:["自然","自然的","Natural","朴素","素朴感","Rustic"],
+  materials:["wood"], eras:["ancient","songyuan"], purposes:["use","decorate"],
+  hints_zh:["从山林到指尖","五千年不曾断过的编织","竹子的韧性是最好的教材","一编一织，都是生活"],
+  hints_en:["From mountain forest to fingertips","Unbroken weaving for 5,000 years","Bamboo resilience is the best teacher","Every weave is life itself"],
+  hints_ja:["山林から指先へ","五千年途絶えぬ編み","竹の靭性は最高の教材","一編み一織り、すべて生活"],
+  match_reason:{ tired:"竹子被反复弯折也不会断。你今天累了，没关系——像竹子一样，弯一弯，明天依然笔直。", tired_en:"Bamboo bends without breaking. You're tired — that's okay. Bend a little, stand tall again tomorrow.", tired_ja:"竹は何度曲げても折れない。今日は疲れた、でも大丈夫。少ししなって、明日また真っ直ぐに。", default:"竹编的每一道纹路都来自双手的耐心——和不急不慌的大自然一样。", default_en:"Every pattern comes from patient hands — unhurried, just like nature.", default_ja:"竹細工のひとつひとつの模様は、忍耐強い手から生まれる——自然と同じく、焦らず、慌てず。" }
+},
+{ id:13, name_zh:"龙泉青瓷", name_en:"Longquan Celadon", name_ja:"龍泉青磁（ロンセンセイジ）",
+  category:"传统工艺", bg_color:"#5b8c6b",
+  desc_zh:"如冰似玉，雨过天青。龙泉窑的釉色是宋人审美的巅峰——不争不抢，但看一眼就再也忘不掉。那是江南山水在窑火中凝成的诗。",
+  desc_en:"Like ice, like jade — the color of sky after rain. Longquan celadon is the peak of Song dynasty aesthetics: never clamoring, but unforgettable at a glance. A poem of Jiangnan landscapes frozen in kiln fire.",
+  desc_ja:"氷の如く、玉の如く——雨上がりの空の色。龍泉青磁は宋の美意識の頂点：決して騒がず、一目で忘れられない。江南の山水が窯の火に凝縮された詩。",
+  origin:"浙江龙泉", origin_en:"Longquan, Zhejiang", origin_ja:"浙江省龍泉", history:1700,
+  emotions:["平静","穏やか","Calm","怀念","懐かしい","Nostalgic"],
+  vibes:["素雅","素朴","Elegant","精致","繊細","Refined","自然","自然的","Natural"],
+  materials:["ceramic","earth"], eras:["songyuan","hantang"], purposes:["decorate","collect","use"],
+  hints_zh:["江南烟雨的颜色","如冰似玉的质感","宋代审美的巅峰","一千七百年窑火"],
+  hints_en:["The color of Jiangnan mist and rain","Like ice, like jade","The peak of Song aesthetics","1,700 years of kiln fire"],
+  hints_ja:["江南の霧雨の色","氷の如く玉の如く","宋の美意識の頂点","千七百年の窯の火"],
+  match_reason:{ calm:"龙泉青瓷不求夺目，却让人移不开眼。这种温润如玉的存在感，正是你此刻的写照。", calm_en:"Longquan celadon doesn't demand attention, yet you can't look away. That warm, jade-like presence is exactly who you are right now.", calm_ja:"龍泉青磁は派手さを求めないのに、目が離せない。その玉のように温かな存在感は、まさに今のあなた。", nostalgic:"雨后天青，是赵宋王朝留给我们最美的颜色。你的怀念，恰好是这抹天青色最好的知音。", nostalgic_en:"Sky-blue after rain — the most beautiful color the Song dynasty left us. Your nostalgia is the best friend this celadon hue could ask for.", nostalgic_ja:"雨上がりの天青色——宋王朝が残した最も美しい色。あなたの懐かしさは、この天青色の最高の知音。", default:"龙泉青瓷的温润，是时间慢慢养出来的。就像你，越沉淀越有光泽。", default_en:"Longquan celadon's warmth is nurtured by time — just like you, deepening with every passing day.", default_ja:"龍泉青磁の温かさは、時間がゆっくり育てたもの。あなたと同じで、時を経るほどに輝きを増す。" }
+},
+{ id:14, name_zh:"苗绣", name_en:"Miao Embroidery", name_ja:"苗族刺繍（ミャオゾクシシュウ）",
+  category:"传统工艺", bg_color:"#8b3a6b",
+  desc_zh:"苗家女儿从小学绣，一针一线把祖先的故事穿在身上。那些繁复的图案不是装饰，是一部无字的史书——迁徙的路、故乡的山水，都在绣片上活着。",
+  desc_en:"Miao girls learn embroidery from childhood, stitching ancestral stories into their garments. Those intricate patterns aren't decoration — they're a wordless history book: migration routes, homeland landscapes, all alive on cloth.",
+  desc_ja:"苗族の娘は幼い頃から刺繍を学び、祖先の物語を一針一針、衣に縫い込む。複雑な模様は飾りではない——文字なき歴史書：移住の道のり、故郷の山水、すべてが布の上に生きている。",
+  origin:"贵州、湖南", origin_en:"Guizhou & Hunan", origin_ja:"貴州省・湖南省", history:3000,
+  emotions:["热烈","情熱的","Passionate","怀念","懐かしい","Nostalgic","雀跃","嬉しい","Joyful"],
+  vibes:["鲜艳","鮮やか","Vivid","神秘","神秘的","Mysterious","精致","繊細","Refined"],
+  materials:["silk","metal"], eras:["ancient","hantang"], purposes:["wear","decorate","collect"],
+  hints_zh:["穿在身上的史书","苗家女儿指尖的传承","无字的千年记忆","比文字更古老的故事"],
+  hints_en:["A history book worn on the body","Miao daughters' fingertip heritage","A thousand-year wordless memory","Stories older than writing"],
+  hints_ja:["身にまとう歴史書","苗族の娘たちの指先の伝承","文字なき千年の記憶","文字よりも古い物語"],
+  match_reason:{ passionate:"苗绣的一针一线都带着祖先的温度。你此刻的热烈，正需要这样滚烫的传承来呼应。", passionate_en:"Every stitch of Miao embroidery carries ancestral warmth. Your passion deserves this burning inheritance.", passionate_ja:"苗绣の一針一針に祖先の温もりが宿る。あなたの今の情熱には、この熱い伝承こそふさわしい。", nostalgic:"苗绣把三千年迁徙的路绣在布上。你的怀念，也许正需要这样一件装着故乡的衣裳。", nostalgic_en:"Miao embroidery stitches 3,000 years of migration onto cloth. Your nostalgia needs this garment that carries home.", nostalgic_ja:"苗绣は三千年の移住の道を布に縫い込む。あなたの懐かしさには、故郷をまとうこの衣が必要。", default:"苗绣从不喧哗，但它承载的故事比谁都多。就像你的内心——看起来安静，打开来全是宝藏。", default_en:"Miao embroidery never shouts, but it carries more stories than anyone. Just like your soul — quiet on the surface, a treasure when opened.", default_ja:"苗绣は決して騒がないが、誰よりも多くの物語を抱えている。あなたの心のように——表面は静かでも、開けば宝の山。" }
+}
+];
+
+// ── Card Visual: AI-stylized real photos with color grading overlay ──
+const IMAGE_BASE = 'heritage-images/';
+const IMAGE_MAP = {
+  1: '01-qinghuaci.png',
+  2: '02-piying.png',
+  3: 'Premium_museum_photography_of__2026-06-12T07-32-18.png',
+  4: 'Premium_museum_photography_of__2026-06-12T07-32-49.png',
+  5: 'Premium_museum_photography_of__2026-06-12T07-33-17.png',
+  6: 'Premium_museum_photography_of__2026-06-12T07-33-45.png',
+  7: 'Premium_museum_photography_of__2026-06-12T07-34-14.png',
+  8: 'Premium_museum_photography_of__2026-06-12T07-34-42.png',
+  9: 'Premium_museum_photography_of__2026-06-12T07-35-11.png',
+  10: 'Premium_museum_photography_of__2026-06-12T07-35-39.png',
+  11: 'Premium_museum_photography_of__2026-06-12T07-36-06.png',
+  12: 'Premium_museum_photography_of__2026-06-12T07-36-35.png',
+  13: 'Premium_museum_photography_of__2026-06-12T09-01-20.png',
+  14: 'Premium_museum_photography_of__2026-06-12T09-01-50.png'
+};
+
+function buildCardVisual(item) {
+  const imgPath = IMAGE_MAP[item.id] ? IMAGE_BASE + IMAGE_MAP[item.id] : '';
+  const hasImg = imgPath && imgPath !== IMAGE_BASE;
+  return `<div class="card-img-wrap">
+    ${hasImg ? `<img src="${imgPath}" alt="${item.name_zh}" class="card-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />` : ''}
+    <div class="card-img-fallback" style="${hasImg ? 'display:none;' : 'display:flex;'}background:${item.bg_color}18;width:100%;height:100%;align-items:center;justify-content:center;font-size:5rem;">
+      <span style="opacity:0.25">${item.emoji}</span>
+    </div>
+    <div class="card-img-gradient" style="background:linear-gradient(180deg,transparent 60%,${item.bg_color}33 100%)"></div>
+  </div>`;
+}
+
+// ── External links ──
+const HERITAGE_LINKS = {
+  1: { zh:"https://baike.baidu.com/item/青花瓷", en:"https://en.wikipedia.org/wiki/Blue_and_white_pottery", ja:"https://ja.wikipedia.org/wiki/染付" },
+  2: { zh:"https://baike.baidu.com/item/皮影戏", en:"https://en.wikipedia.org/wiki/Shadow_play", ja:"https://ja.wikipedia.org/wiki/影絵" },
+  3: { zh:"https://baike.baidu.com/item/蜀锦", en:"https://en.wikipedia.org/wiki/Shu_brocade", ja:"https://zh.wikipedia.org/wiki/蜀锦" },
+  4: { zh:"https://baike.baidu.com/item/古琴", en:"https://en.wikipedia.org/wiki/Guqin", ja:"https://ja.wikipedia.org/wiki/古琴" },
+  5: { zh:"https://baike.baidu.com/item/扎染", en:"https://en.wikipedia.org/wiki/Tie-dye", ja:"https://ja.wikipedia.org/wiki/絞り染め" },
+  6: { zh:"https://baike.baidu.com/item/剪纸", en:"https://en.wikipedia.org/wiki/Paper_cutting", ja:"https://ja.wikipedia.org/wiki/切り紙" },
+  7: { zh:"https://baike.baidu.com/item/紫砂壶", en:"https://en.wikipedia.org/wiki/Yixing_clay_teapot", ja:"https://ja.wikipedia.org/wiki/紫砂" },
+  8: { zh:"https://baike.baidu.com/item/风筝", en:"https://en.wikipedia.org/wiki/Kite", ja:"https://ja.wikipedia.org/wiki/凧" },
+  9: { zh:"https://baike.baidu.com/item/榫卯", en:"https://en.wikipedia.org/wiki/Mortise_and_tenon", ja:"https://zh.wikipedia.org/wiki/榫卯" },
+  10: { zh:"https://baike.baidu.com/item/苏绣", en:"https://en.wikipedia.org/wiki/Suzhou_embroidery", ja:"https://zh.wikipedia.org/wiki/苏绣" },
+  11: { zh:"https://baike.baidu.com/item/泥人张", en:"https://en.wikipedia.org/wiki/Clay_figure", ja:"https://zh.wikipedia.org/wiki/泥人张彩塑" },
+  12: { zh:"https://baike.baidu.com/item/竹编", en:"https://en.wikipedia.org/wiki/Bamboo_weaving", ja:"https://ja.wikipedia.org/wiki/竹細工" },
+  13: { zh:"https://baike.baidu.com/item/龙泉青瓷", en:"https://en.wikipedia.org/wiki/Longquan_celadon", ja:"https://zh.wikipedia.org/wiki/龍泉青瓷" },
+  14: { zh:"https://baike.baidu.com/item/苗绣", en:"https://en.wikipedia.org/wiki/Miao_embroidery", ja:"https://zh.wikipedia.org/wiki/苗绣" }
+};
+// JA mode uses Baidu Baike (Japanese Wikipedia lacks articles for these niche topics)
+
+// ── Personality traits for each heritage type ──
+const HERITAGE_TRAITS = {
+  1: { zh:"沉静如水，内心自有山河。不争不抢，却自成世界。你不喜欢喧嚣，但你的安静本身就是一种力量。和青花瓷一样，你相信时间是最好的工匠——越沉淀，越珍贵。在别人匆匆忙忙的时候，你正一笔一画地勾勒自己的宇宙。",
+    en:"Calm as still water, carrying mountains within. You never clamor, yet your silence is its own force. Like blue-and-white porcelain, you trust time as the finest craftsman — the longer you settle, the more precious you become. While others rush, you paint your universe stroke by stroke.",
+    ja:"静かな水面のように、内に山河を宿す。争わず、それでいて完璧な世界。青花と同じく、時間こそ最高の職人だと信じている——沈殿すればするほど、価値が増す。人々が急ぐ中、あなたは一筆一筆、自分の宇宙を描いている。" },
+  2: { zh:"光影魔术师，幕后的故事讲述者。你的有趣，只有懂的人才看得见。皮影型人格的人天生是气氛制造者——你在哪里，故事就在哪里。你喜欢把真实藏在影子里，让愿意走近的人一探究竟。你的灵魂，一半在台前挥洒，一半在幕后微笑。",
+    en:"A magician of light and shadow, a storyteller behind the curtain. Shadow Puppetry types are natural atmosphere-makers — wherever you are, stories unfold. You like hiding truth behind shadows, inviting only those who truly look to discover. Half your soul performs on stage; the other half smiles behind the screen.",
+    ja:"光と影の魔術師、幕の後ろの語り部。影絵タイプの人は生まれつきの雰囲気メーカー——あなたがいるところに物語が生まれる。真実は影の中に隠し、本当に見ようとする人だけに発見させる。あなたの魂は、半分は舞台で輝き、半分は幕の後ろで微笑む。" },
+  3: { zh:"繁复而热烈，每一面都精心编织。你的人生，经纬分明。蜀锦型人格的人从不做简单的事——你享受复杂本身。别人看到的绚烂图案，背后是你一针一线的投入。你相信精致不是天赋，是千万次重复后的本能。你活得像一匹锦缎：越细看，越惊叹。",
+    en:"Intricate and passionate, every facet carefully woven. Shu Brocade types never do simple things — you savor complexity itself. What others see as dazzling patterns is your stitch-by-stitch dedication. You believe refinement isn't talent but instinct born from ten thousand repetitions. You live like a brocade: the closer one looks, the more astonishing.",
+    ja:"複雑で情熱的、あらゆる面が丹念に織られている。蜀錦タイプの人は決して簡単なことをしない——複雑さそのものを味わう。人が見る華やかな模様の裏には、あなたの一針一針の投入がある。繊細さは才能ではなく、万回の反復から生まれた本能だと信じている。" },
+  4: { zh:"七弦之间自有天地。少言，但每一句都有回响。古琴型人格是人群里的留白——你不会填满每一个空隙，但你的存在让整个空间有了质地。你相信声音的价值不在于多，而在于对的人能听出弦外之音。寂静是你最好的朋友，共鸣是你最深的快乐。",
+    en:"Seven strings hold the universe. You speak little, but every word echoes. Guqin types are the empty spaces in a crowd — you don't fill every gap, but your presence gives the room texture. You believe sound's value isn't in quantity but in whether the right person hears between the notes. Silence is your best friend; resonance, your deepest joy.",
+    ja:"七弦の間に天地がある。寡黙だが、一言一言に余韻がある。古琴タイプの人は群衆の中の余白——すべての隙間を埋めはしないが、あなたの存在が空間に質感を与える。音の価値は量ではなく、正しい人が弦の外の音を聴けることにあると信じている。静寂は最高の友、共鳴は最も深い喜び。" },
+  5: { zh:"在约束中寻找自由，在规则里创造意外。你的美，拆开才知道。扎染型人格从不走直线——你偏爱那些带着不确定性的选择。你相信最好的东西都是无法复制的，就像你的人生：每一次展开，都是唯一的图案。别人追求完美，你追求独一无二。",
+    en:"Finding freedom within constraints, creating surprises within rules. Tie-dye types never walk straight lines — you favor choices tinged with uncertainty. You believe the best things can never be replicated, just like your life: every unfolding reveals a one-of-a-kind pattern. Others chase perfection; you chase uniqueness.",
+    ja:"制約の中で自由を見つけ、ルールの中で驚きを生む。絞り染めタイプの人は決して直線を歩まない——不確かさを帯びた選択を好む。最高のものは決して複製できないと信じている、あなたの人生のように：広げるたびに唯一無二の模様。人は完璧を追うが、あなたは唯一無二を追う。" },
+  6: { zh:"于纸上镂空世界。一刀一剪，都是心想事成。剪纸型人格的人有一种孩子气的笃定——你相信只要动手，世界就会变得不一样。你的快乐很简单：一张红纸，一把剪刀，一个下午。你知道那些镂空的地方不是空洞，是留给光进来的。",
+    en:"Carving worlds from paper. Every cut is a wish come true. Paper Cutting types have a childlike certainty — you believe the world changes the moment you start making. Your joy is simple: a sheet of red paper, a pair of scissors, an afternoon. You know the empty spaces aren't voids — they're openings for light.",
+    ja:"紙の上に世界を切り抜く。一刃一刃が願いの実現。切り紙タイプの人は子どもっぽい確信を持っている——手を動かせば、世界は変わると信じている。あなたの喜びはシンプル：一枚の赤い紙、一丁の鋏、一つの午後。切り抜かれた空白は空虚ではなく、光のための開口部だと知っている。" },
+  7: { zh:"温润如玉，越相处越有味道。急躁的人喝不了你的茶。紫砂壶型人格是慢热的——你需要时间来暖场，但只要温度够了，你就是世界上最熨帖的陪伴。你记得每一次遇见，每一个人的温度。你的好，需要耐心才能品出来，但品出来的人，再也离不开。",
+    en:"Warm as jade, deepening with every encounter. Zisha Teapot types are slow to warm — you need time, but once the temperature's right, you're the most soothing company in the world. You remember every encounter, every person's warmth. Your goodness needs patience to taste, but those who taste it can never leave.",
+    ja:"玉のように温かく、付き合うほどに味わい深い。紫砂急須タイプの人はゆっくり温まる——時間が必要だが、温度が整えば、世界で最も心地よい伴侶になる。あなたはすべての出会いを、すべての人の温もりを覚えている。あなたの良さは忍耐がなければ味わえないが、味わった人はもう離れられない。" },
+  8: { zh:"逆风而上，越飞越高。你需要一根线，也需要一阵风。风筝型人格是自由的——但不是无根的自由。你知道那根线不是束缚，是让你飞得更远的底气。你对世界永远保持仰望的姿态，哪怕逆风，也能把它变成上升的助力。你的乐观，是会传染的。",
+    en:"Rising against the wind, soaring ever higher. Kite types are free — but not rootlessly so. You know the string isn't a constraint but the confidence to fly farther. You always look upward at the world, turning headwinds into lift. Your optimism is contagious.",
+    ja:"風に逆らって、高く高く。凧タイプの人は自由だが、根無しの自由ではない。あなたは糸が束縛ではなく、より遠くへ飛ぶための自信だと知っている。世界を常に見上げる姿勢を持ち、逆風さえも上昇の助けに変える。あなたの楽観は伝染する。" },
+  9: { zh:"不靠外力，自己咬合自己。你是自己的榫，也是自己的卯。榫卯型人格有一种内敛的完整性——你不需要太多外部支撑，就能稳稳立在世界上。你相信最好的关系不是依附，而是刚好契合。别人看你不声不响，其实你的结构，比谁都牢固。",
+    en:"Self-supporting, interlocking with yourself. Mortise & Tenon types have an inward completeness — you need little external support to stand firm. You believe the best relationships aren't about dependence but perfect fit. Others think you're quiet; in truth, your structure is stronger than anyone's.",
+    ja:"外力に頼らず、自ら噛み合う。組木タイプの人は内に秘めた完全性を持つ——外からの支えをほとんど必要とせず、世界にしっかりと立つ。最良の関係は依存ではなく、ちょうど良く合うことだと信じている。人はあなたを静かだと思うが、実はあなたの構造は誰よりも強い。" },
+  10: { zh:"一根丝劈成十六份的耐心。你的细腻，是这个世界最稀缺的天赋。苏绣型人格是温柔的极致——你能在微末处看见整个世界。别人匆匆一瞥的细节，你会花一整天去品味。你慢，但你不是拖延——你是在用别人赶路的时间，织一件值得传世的作品。",
+    en:"The patience to split a thread sixteen ways. Suzhou Embroidery types are gentleness perfected — you can see the whole world in the tiniest detail. What others glance past, you spend a day savoring. You're slow, but not procrastinating — you're using the time others rush through to weave something worth passing down.",
+    ja:"一本の糸を十六に割る忍耐。蘇繍タイプの人は究極の優しさ——微細なところに全世界を見ることができる。人がちらりと見て通り過ぎる細部を、あなたは一日かけて味わう。あなたは遅いが、先延ばしではない——人が急ぐ時間で、伝世に値する作品を織っている。" },
+  11: { zh:"泥土在你手里有了表情。你看见的世间百态，比谁都生动。泥人张型人格是人间观察者——你有一双能把普通变成有趣的眼睛。你喜欢人，喜欢活生生的悲欢离合。你不必成为焦点，但你总是最懂人间喜剧的那个人。你的幽默感，是老天赏的饭碗。",
+    en:"Clay takes on expressions in your hands. Clay Figurine types are people-watchers — you have eyes that turn the ordinary into the entertaining. You love people, love the raw drama of life. You don't need to be center stage, but you're always the one who best understands the human comedy. Your humor is a gift from above.",
+    ja:"土があなたの手の中で表情を持つ。泥人形タイプの人は人間観察者——あなたは普通を面白く変える目を持っている。人が好きで、生き生きとした悲喜劇が好き。あなたは主役になる必要はないが、常に人間喜劇を最も理解している人。あなたのユーモアは天からの贈り物。" },
+  12: { zh:"弯而不折，柔中带韧。千编万织，依然笔直生长。竹编型人格有一种来自自然的从容——你知道什么时候该柔，什么时候该刚。你不会和生活硬碰硬，但谁也压不弯你的脊梁。你相信积累的力量：一天编一寸，一年就是一片竹林。",
+    en:"Bending without breaking, soft yet resilient. Bamboo Weaving types have a natural poise — you know when to be soft and when to stand firm. You don't fight life head-on, but no one can bend your spine. You believe in accumulation: weave an inch a day, and a year becomes a bamboo forest.",
+    ja:"曲がっても折れず、柔らかさの中に靭性。竹細工タイプの人は自然からの余裕を持つ——いつ柔らかく、いつ強くなるべきかを知っている。人生と真正面からぶつからず、それでも誰もあなたの背骨を曲げられない。あなたは積み重ねの力を信じている：一日一寸編めば、一年で竹林になる。" },
+  13: { zh:"温润如玉，和光同尘。不争不抢，但你经过的地方都会安静下来。龙泉青瓷型人格有一种宋人式的风雅——你知道美不需要宣告。你像雨后的天青色：不浓不淡，不多不少，刚好让人记住一辈子。你的存在本身就是一种疗愈，别人靠近你，就自然地慢下来了。",
+    en:"Warm as jade, blending with dust and light. Longquan Celadon types carry a Song-dynasty elegance — you know beauty needs no announcement. Like the sky-blue after rain: neither too much nor too little, just enough to be remembered for a lifetime. Your presence itself is healing; people slow down just by being near you.",
+    ja:"玉のように温かく、光と共に塵に和す。龍泉青磁タイプの人は宋の雅趣を持つ——美は宣言する必要がないと知っている。雨上がりの天青色のように：濃すぎず薄すぎず、多すぎず少なすぎず、ちょうど一生忘れられないほど。あなたの存在そのものが癒しであり、近づく人は自然にゆっくりになる。" },
+  14: { zh:"把故乡穿在身上的人。你的故事不用嘴说，一针一线都在替你说。苗绣型人格有着最古老的灵魂——你身上带着祖先的记忆，心中装着迁徙的地图。你热烈但不张扬，把几千年的荣光都绣进了日常里。你就是行走的史诗，每一道纹路都是时间的刻度。",
+    en:"One who wears home on their body. Miao Embroidery types carry the oldest souls — you wear ancestral memory, your heart holds migration maps. You're passionate but never loud, stitching millennia of glory into the everyday. You're a walking epic; every pattern is time's own scale.",
+    ja:"故郷を身にまとう人。苗绣タイプの人は最も古い魂を持つ——祖先の記憶を身にまとい、心には移住の地図を抱く。情熱的だが決して騒がず、数千年の栄光を日常に縫い込む。あなたは歩く叙事詩であり、一つ一つの模様が時間の目盛り。" }
+};
+
+// ── Extended dimension tags for 10-dim matching ──
+const HERITAGE_EXT = {
+  1: { elements:["water","earth_el"], animals:["crane","turtle"], homes:["courtyard","mountains"], times:["dawn","dusk"], philosophies:["essential","balanced"] },
+  2: { elements:["fire","wind"], animals:["tiger","dragon"], homes:["city","studio"], times:["dusk","midnight"], philosophies:["freeflow","adaptive"] },
+  3: { elements:["fire","metal_el"], animals:["dragon","butterfly"], homes:["city","courtyard"], times:["noon","dawn"], philosophies:["methodical","balanced"] },
+  4: { elements:["wood_el","wind"], animals:["crane","turtle"], homes:["mountains","courtyard"], times:["midnight","dawn"], philosophies:["essential","balanced"] },
+  5: { elements:["water","wind"], animals:["butterfly","deer"], homes:["countryside","studio"], times:["dawn","eternity"], philosophies:["adaptive","freeflow"] },
+  6: { elements:["fire","metal_el"], animals:["butterfly","tiger"], homes:["city","courtyard"], times:["noon","dusk"], philosophies:["freeflow","independent"] },
+  7: { elements:["earth_el","water"], animals:["turtle","crane"], homes:["courtyard","countryside"], times:["dawn","dusk"], philosophies:["essential","methodical"] },
+  8: { elements:["wind","wood_el"], animals:["crane","butterfly"], homes:["mountains","clouds"], times:["dawn","noon"], philosophies:["freeflow","independent"] },
+  9: { elements:["wood_el","earth_el"], animals:["turtle","deer"], homes:["mountains","courtyard"], times:["eternity","dusk"], philosophies:["essential","balanced"] },
+  10: { elements:["metal_el","water"], animals:["crane","butterfly"], homes:["studio","courtyard"], times:["dawn","eternity"], philosophies:["methodical","essential"] },
+  11: { elements:["earth_el","fire"], animals:["deer","tiger"], homes:["city","studio"], times:["noon","dusk"], philosophies:["freeflow","adaptive"] },
+  12: { elements:["wood_el","wind"], animals:["deer","turtle"], homes:["countryside","mountains"], times:["dawn","eternity"], philosophies:["essential","balanced"] },
+  13: { elements:["water","earth_el"], animals:["crane","turtle"], homes:["mountains","courtyard"], times:["dawn","dusk"], philosophies:["essential","balanced"] },
+  14: { elements:["fire","metal_el"], animals:["butterfly","dragon"], homes:["countryside","mountains"], times:["dusk","eternity"], philosophies:["freeflow","methodical"] }
+};
+let currentLang = 'zh';
+let selectedEmotion = null;
+let selectedVibe = null;
+let selectedMaterial = null;
+let selectedEra = null;
+let selectedPurpose = null;
+let selectedElement = null;
+let selectedAnimal = null;
+let selectedHome = null;
+let selectedTime = null;
+let selectedPhilosophy = null;
+let tapCount = 0;
+let matchedItem = null;
+
+function t(key) { return I18N[currentLang][key] || I18N['zh'][key] || key; }
+
+// Material/era/purpose raw key maps (index-matched with display arrays)
+const DIM_KEYS = {
+  materials: ["wood","ceramic","silk","metal","paper","earth"],
+  eras: ["ancient","hantang","songyuan","mingqing","republic","modern"],
+  purposes: ["decorate","use","listen","watch","wear","collect"],
+  elements: ["wind","fire","water","earth_el","metal_el","wood_el"],
+  animals: ["crane","tiger","butterfly","turtle","dragon","deer"],
+  homes: ["mountains","city","countryside","studio","courtyard","clouds"],
+  times: ["dawn","noon","dusk","midnight","eternity"],
+  philosophies: ["balanced","freeflow","methodical","adaptive","independent","essential"]
+};
+
+// ── Build dynamic UI ──
+function renderEmotionGrid() {
+  const grid = document.getElementById('emotionGrid');
+  grid.innerHTML = I18N[currentLang].emotions.map(e =>
+    `<button class="emotion-btn" data-emotion="${e.name}" data-key="${e.key}"><span class="emotion-icon">${e.emoji}</span><span class="emotion-name">${e.name}</span>${e.sub ? `<span class="emotion-sub">${e.sub}</span>` : ''}</button>`
+  ).join('');
+  grid.querySelectorAll('.emotion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedEmotion = { name: btn.dataset.emotion, key: btn.dataset.key };
+      document.getElementById('toVibeBtn').disabled = false;
+      setTimeout(() => goToVibe(), 350);
+    });
+  });
+}
+
+function renderVibeGrid() {
+  const grid = document.getElementById('vibeGrid');
+  const dots = ["#c8bfb0","#c0392b","#2c3e6b","#5a7a4a","#c9a84c","#8b7355"];
+  grid.innerHTML = I18N[currentLang].vibes.map((v,i) =>
+    `<button class="vibe-btn" data-vibe="${v}"><span class="vibe-dot" style="background:${dots[i]}"></span>${v}</button>`
+  ).join('');
+  grid.querySelectorAll('.vibe-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedVibe = btn.dataset.vibe;
+      document.getElementById('toMaterialBtn').disabled = false;
+      setTimeout(() => goToMaterial(), 350);
+    });
+  });
+}
+
+function applyI18n(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    el[key.startsWith('_html') ? 'innerHTML' : 'textContent'] = t(key.replace('_html ', ''));
+  });
+  document.getElementById('headerLogo').textContent = t('header_logo');
+  document.getElementById('headerTagline').textContent = t('header_tagline');
+  document.querySelectorAll('#langBadge button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  renderEmotionGrid();
+  renderVibeGrid();
+  renderMaterialGrid();
+  renderEraGrid();
+  renderPurposeGrid();
+  renderElementGrid();
+  renderAnimalGrid();
+  renderHomeGrid();
+  renderTimeGrid();
+  renderPhilosophyGrid();
+}
+
+// ── Generic grid renderer for material/era/purpose ──
+function renderOptionGrid(gridId, btnId, dataKey, setVar, autoNext) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  const items = I18N[currentLang][dataKey];
+  grid.innerHTML = items.map(item =>
+    `<button class="vibe-btn" data-value="${item}">${item}</button>`
+  ).join('');
+  grid.querySelectorAll('.vibe-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      grid.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      setVar(btn.dataset.value);
+      document.getElementById(btnId).disabled = false;
+      if (autoNext) setTimeout(autoNext, 350);
+    });
+  });
+}
+
+function renderMaterialGrid() {
+  renderOptionGrid('materialGrid', 'toEraBtn', 'materials', v => { selectedMaterial = v; }, goToEra);
+}
+function renderEraGrid() {
+  renderOptionGrid('eraGrid', 'toPurposeBtn', 'eras', v => { selectedEra = v; }, goToPurpose);
+}
+function renderPurposeGrid() {
+  renderOptionGrid('purposeGrid', 'toElementBtn', 'purposes', v => { selectedPurpose = v; }, goToElement);
+}
+function renderElementGrid() {
+  renderOptionGrid('elementGrid', 'toAnimalBtn', 'elements', v => { selectedElement = v; }, goToAnimal);
+}
+function renderAnimalGrid() {
+  renderOptionGrid('animalGrid', 'toHomeBtn', 'animals', v => { selectedAnimal = v; }, goToHome);
+}
+function renderHomeGrid() {
+  renderOptionGrid('homeGrid', 'toTimeBtn', 'homes', v => { selectedHome = v; }, goToTime);
+}
+function renderTimeGrid() {
+  renderOptionGrid('timeGrid', 'toPhilosophyBtn', 'times', v => { selectedTime = v; }, goToPhilosophy);
+}
+function renderPhilosophyGrid() {
+  renderOptionGrid('philosophyGrid', 'toOpenBtn', 'philosophies', v => { selectedPhilosophy = v; }, null);
+}
+
+// ── Screen navigation ──
+// Navigation stack for back button
+let screenStack = [];
+
+function showScreen(id, trackBack = true) {
+  document.querySelectorAll('.screen.active').forEach(s => {
+    if (trackBack && s.id && s.id !== id) screenStack.push(s.id);
+  });
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const tgt = document.getElementById(id);
+  if (tgt) tgt.classList.add('active');
+  if (id === 'screen-result') {
+    const card = document.getElementById('resultCard');
+    if (card) { card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'reveal-card 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'; }
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  // Clear current screen's selection visually
+  document.querySelectorAll('.screen.active .selected').forEach(b => b.classList.remove('selected'));
+  if (screenStack.length === 0) { showScreen('screen-emotion', false); return; }
+  const prev = screenStack.pop();
+  showScreen(prev, false);
+}
+
+function goToVibe() { showScreen('screen-vibe'); }
+function goToMaterial() { showScreen('screen-material'); }
+function goToEra() { showScreen('screen-era'); }
+function goToPurpose() { showScreen('screen-purpose'); }
+function goToElement() { showScreen('screen-element'); }
+function goToAnimal() { showScreen('screen-animal'); }
+function goToHome() { showScreen('screen-home'); }
+function goToTime() { showScreen('screen-time'); }
+function goToPhilosophy() { showScreen('screen-philosophy'); }
+
+function goToOpen() {
+  tapCount = 0;
+  matchedItem = null;
+  resetBox();
+  updateTapProgress();
+  document.getElementById('hintText').classList.remove('show');
+  document.getElementById('hintText').textContent = '';
+  document.getElementById('boxGlyph').textContent = '物';
+  document.getElementById('boxHint').textContent = t('click_open');
+  showScreen('screen-open');
+}
+
+// ── Box & tap mechanics ──
+function resetBox() {
+  const box = document.getElementById('theBox');
+  const dots = document.getElementById('loadingDots');
+  const err = document.getElementById('errorMsg');
+  box.style.opacity = '1'; box.style.transform = '';
+  box.className = 'box';
+  if (dots) dots.style.display = 'none';
+  if (err) err.style.display = 'none';
+}
+
+function updateTapProgress() {
+  const dots = document.querySelectorAll('#tapProgress .tap-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('filled', 'current');
+    if (i < tapCount) d.classList.add('filled');
+    if (i === tapCount && tapCount < 5) d.classList.add('current');
+  });
+}
+
+function spawnParticles() {
+  const container = document.getElementById('boxContainer');
+  for (let i = 0; i < 8; i++) {
+    const p = document.createElement('span');
+    p.className = 'particle';
+    p.style.left = (40 + Math.random() * 100) + 'px';
+    p.style.top = (50 + Math.random() * 80) + 'px';
+    p.style.width = (3 + Math.random() * 4) + 'px';
+    p.style.height = p.style.width;
+    p.style.animationDuration = (0.5 + Math.random() * 0.6) + 's';
+    p.style.animationDelay = (Math.random() * 0.2) + 's';
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 1000);
+  }
+}
+
+async function openBox() {
+  if (tapCount >= 5) return;
+
+  const box = document.getElementById('theBox');
+  const hint = document.getElementById('boxHint');
+  const hintText = document.getElementById('hintText');
+  const dots = document.getElementById('loadingDots');
+
+  tapCount++;
+
+  // If this is the first tap, find the match now
+  if (tapCount === 1) {
+    matchedItem = findMatch();
+  }
+
+  // Update progress dots
+  updateTapProgress();
+
+  // Shake animation based on tap number
+  const shakeClass = tapCount === 5 ? 'shake-final' : `shake-${Math.min(tapCount, 4)}`;
+  box.classList.remove('shake-1','shake-2','shake-3','shake-4','shake-final');
+  void box.offsetWidth;
+  box.classList.add(shakeClass);
+
+  // Glow effect
+  box.classList.remove('glow-1','glow-2','glow-3','glow-4');
+  if (tapCount >= 2) box.classList.add(`glow-${Math.min(tapCount-1, 4)}`);
+
+  // Glyph change
+  const glyphs = ['物','物','物','?','!'];
+  document.getElementById('boxGlyph').textContent = glyphs[tapCount - 1];
+
+  // Update hint
+  if (tapCount === 5) {
+    hint.textContent = t('opening');
+    spawnParticles();
+  } else {
+    hint.textContent = `${tapCount}/5`;
+  }
+
+  // Show clue hint (for taps 1-4)
+  if (tapCount <= 4 && matchedItem) {
+    const hintsKey = `hints_${currentLang}`;
+    const hints = matchedItem[hintsKey] || matchedItem.hints_zh;
+    hintText.textContent = hints[tapCount - 1];
+    hintText.classList.add('show');
+  }
+
+  if (tapCount < 5) return;
+
+  // ── Final tap: burst and reveal ──
+  hintText.classList.remove('show');
+
+  // Burst animation
+  setTimeout(() => {
+    box.classList.add('burst');
+    spawnParticles();
+  }, 300);
+
+  await new Promise(r => setTimeout(r, 800));
+  dots.style.display = 'flex';
+
+  await new Promise(r => setTimeout(r, 900));
+
+  try {
+    dots.style.display = 'none';
+    renderResult(matchedItem);
+    showScreen('screen-result');
+  } catch (err) {
+    dots.style.display = 'none';
+    document.getElementById('errorMsg').style.display = 'block';
+    document.getElementById('errorMsg').textContent = t('error_msg');
+    resetBox();
+    tapCount = 0;
+    updateTapProgress();
+    hint.textContent = t('click_open');
+  }
+}
+
+// ── Matching ──
+function findMatch() {
+  // Convert display values to matching keys using index lookup
+  const vibeMapZh = ["素雅","鲜艳","神秘","自然","精致","朴素"];
+  const vibeIdx = I18N[currentLang].vibes.indexOf(selectedVibe);
+  const vibeZh = vibeIdx >= 0 ? vibeMapZh[vibeIdx] : selectedVibe;
+  const matIdx = I18N[currentLang].materials.indexOf(selectedMaterial);
+  const matKey = matIdx >= 0 ? DIM_KEYS.materials[matIdx] : null;
+  const eraIdx = I18N[currentLang].eras.indexOf(selectedEra);
+  const eraKey = eraIdx >= 0 ? DIM_KEYS.eras[eraIdx] : null;
+  const purIdx = I18N[currentLang].purposes.indexOf(selectedPurpose);
+  const purKey = purIdx >= 0 ? DIM_KEYS.purposes[purIdx] : null;
+  const elIdx = I18N[currentLang].elements.indexOf(selectedElement);
+  const elKey = elIdx >= 0 ? DIM_KEYS.elements[elIdx] : null;
+  const anIdx = I18N[currentLang].animals.indexOf(selectedAnimal);
+  const anKey = anIdx >= 0 ? DIM_KEYS.animals[anIdx] : null;
+  const hoIdx = I18N[currentLang].homes.indexOf(selectedHome);
+  const hoKey = hoIdx >= 0 ? DIM_KEYS.homes[hoIdx] : null;
+  const tiIdx = I18N[currentLang].times.indexOf(selectedTime);
+  const tiKey = tiIdx >= 0 ? DIM_KEYS.times[tiIdx] : null;
+  const phIdx = I18N[currentLang].philosophies.indexOf(selectedPhilosophy);
+  const phKey = phIdx >= 0 ? DIM_KEYS.philosophies[phIdx] : null;
+
+  // Score each item across 10 dimensions
+  const scored = heritageDB.map(item => {
+    let score = 0;
+    const ext = HERITAGE_EXT[item.id] || {};
+    if (item.emotions.includes(selectedEmotion.name)) score++;
+    if (item.vibes.includes(vibeZh)) score++;
+    if (matKey && item.materials.includes(matKey)) score++;
+    if (eraKey && item.eras.includes(eraKey)) score++;
+    if (purKey && item.purposes.includes(purKey)) score++;
+    if (elKey && ext.elements && ext.elements.includes(elKey)) score++;
+    if (anKey && ext.animals && ext.animals.includes(anKey)) score++;
+    if (hoKey && ext.homes && ext.homes.includes(hoKey)) score++;
+    if (tiKey && ext.times && ext.times.includes(tiKey)) score++;
+    if (phKey && ext.philosophies && ext.philosophies.includes(phKey)) score++;
+    return { item, score };
+    return { item, score };
+  });
+
+  // Sort by score descending, pick from top scorers
+  scored.sort((a, b) => b.score - a.score);
+  const maxScore = scored[0].score;
+  const topCandidates = scored.filter(s => s.score === maxScore);
+  const pick = topCandidates[Math.floor(Math.random() * topCandidates.length)].item;
+
+  const ek = selectedEmotion.key;
+  const suff = currentLang === 'en' ? '_en' : currentLang === 'ja' ? '_ja' : '';
+  const reason = pick.match_reason[ek + suff] || pick.match_reason['default' + suff] || pick.match_reason.default;
+
+  return { ...pick, match_reason: reason };
+}
+
+// ── Render result ──
+function renderResult(item) {
+  const lang = currentLang;
+  const name = lang === 'en' ? item.name_en : lang === 'ja' ? item.name_ja : item.name_zh;
+  const subName = '';
+  const category = I18N[lang].cat_names[item.category] || item.category;
+  const desc = lang === 'en' ? item.desc_en : lang === 'ja' ? item.desc_ja : item.desc_zh;
+  const origin = lang === 'en' ? (item.origin_en||item.origin) : lang === 'ja' ? (item.origin_ja||item.origin) : item.origin;
+  const svgArt = buildCardVisual(item);
+
+  // Calculate match score for display
+  const vibeMapZh2 = ["素雅","鲜艳","神秘","自然","精致","朴素"];
+  const vIdx = I18N[currentLang].vibes.indexOf(selectedVibe);
+  const vZh = vIdx >= 0 ? vibeMapZh2[vIdx] : selectedVibe;
+  const mIdx = I18N[currentLang].materials.indexOf(selectedMaterial);
+  const mKey = mIdx >= 0 ? DIM_KEYS.materials[mIdx] : null;
+  const eIdx = I18N[currentLang].eras.indexOf(selectedEra);
+  const eKey = eIdx >= 0 ? DIM_KEYS.eras[eIdx] : null;
+  const pIdx = I18N[currentLang].purposes.indexOf(selectedPurpose);
+  const pKey = pIdx >= 0 ? DIM_KEYS.purposes[pIdx] : null;
+  const elIdx = I18N[currentLang].elements.indexOf(selectedElement);
+  const elKey = elIdx >= 0 ? DIM_KEYS.elements[elIdx] : null;
+  const anIdx = I18N[currentLang].animals.indexOf(selectedAnimal);
+  const anKey = anIdx >= 0 ? DIM_KEYS.animals[anIdx] : null;
+  const hoIdx = I18N[currentLang].homes.indexOf(selectedHome);
+  const hoKey = hoIdx >= 0 ? DIM_KEYS.homes[hoIdx] : null;
+  const tiIdx = I18N[currentLang].times.indexOf(selectedTime);
+  const tiKey = tiIdx >= 0 ? DIM_KEYS.times[tiIdx] : null;
+  const phIdx = I18N[currentLang].philosophies.indexOf(selectedPhilosophy);
+  const phKey = phIdx >= 0 ? DIM_KEYS.philosophies[phIdx] : null;
+
+  let dimScore = 0;
+  if (item.emotions.includes(selectedEmotion.name)) dimScore++;
+  if (item.vibes.includes(vZh)) dimScore++;
+  if (mKey && item.materials.includes(mKey)) dimScore++;
+  if (eKey && item.eras.includes(eKey)) dimScore++;
+  if (pKey && item.purposes.includes(pKey)) dimScore++;
+  const ext = HERITAGE_EXT[item.id] || {};
+  if (elKey && ext.elements && ext.elements.includes(elKey)) dimScore++;
+  if (anKey && ext.animals && ext.animals.includes(anKey)) dimScore++;
+  if (hoKey && ext.homes && ext.homes.includes(hoKey)) dimScore++;
+  if (tiKey && ext.times && ext.times.includes(tiKey)) dimScore++;
+  if (phKey && ext.philosophies && ext.philosophies.includes(phKey)) dimScore++;
+
+  const dimLabel = lang === 'en' ? `${dimScore}/10 match` : lang === 'ja' ? `${dimScore}/10一致` : `${dimScore}/10 匹配`;
+
+  const link = HERITAGE_LINKS[item.id]?.[lang] || HERITAGE_LINKS[item.id]?.zh || '#';
+  const linkLabel = lang === 'en' ? 'Learn more →' : lang === 'ja' ? '詳しくはWikipediaへ →' : '了解更多 →';
+  const traits = HERITAGE_TRAITS[item.id];
+  const traitText = traits?.[lang] || traits?.zh || '';
+  const personalityPrefix = lang === 'en' ? 'I am ' : lang === 'ja' ? '私は ' : '我是 ';
+  const personalitySuffix = lang === 'en' ? ' Type' : lang === 'ja' ? ' タイプ' : ' 型人格';
+
+  document.getElementById('resultCard').innerHTML = `
+    <div class="card-color-strip" style="background:${item.bg_color}"></div>
+    <div class="card-header">
+      <div class="card-category">${category}</div>
+      <div class="card-personality-label">${t('heritage_me_label')}</div>
+      <div class="card-name-zh">${name}${personalitySuffix}</div>
+      <div class="card-name-sub">${subName !== name ? subName : ''}</div>
+      <div class="card-emotion-tag">${dimLabel}</div>
+    </div>
+    <div class="card-visual">${svgArt}</div>
+    <div class="card-body">
+      <div class="card-trait">${traitText}</div>
+      <p class="card-desc">${desc}</p>
+      <div class="card-dimensions">
+        <span class="dim-chip">${selectedEmotion.name}</span>
+        <span class="dim-chip">${selectedVibe}</span>
+        <span class="dim-chip">${selectedMaterial}</span>
+        <span class="dim-chip">${selectedEra}</span>
+        <span class="dim-chip">${selectedPurpose}</span>
+      </div>
+      <div class="card-origin">
+        <div class="origin-item"><span class="origin-label">${t('origin_label')}</span><span class="origin-value">${origin}</span></div>
+        <div class="origin-item"><span class="origin-label">${t('history_label')}</span><span class="origin-value">${t('about')} ${item.history} ${lang==='en'?'yrs':'年'}</span></div>
+        <div class="origin-item"><span class="origin-label">${t('match_label')}</span><span class="origin-value">${dimLabel}</span></div>
+      </div>
+      <a href="${link}" target="_blank" rel="noopener" class="card-link">${linkLabel}</a>
+    </div>
+  `;
+  document.getElementById('matchReason').innerHTML = `<strong>${t('why_title')}</strong><br>${item.match_reason}`;
+}
+
+// ── Restart ──
+function restart() {
+  selectedEmotion = null; selectedVibe = null;
+  selectedMaterial = null; selectedEra = null; selectedPurpose = null;
+  selectedElement = null; selectedAnimal = null; selectedHome = null;
+  selectedTime = null; selectedPhilosophy = null;
+  tapCount = 0; matchedItem = null; screenStack = [];
+  document.querySelectorAll('.emotion-btn,.vibe-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('toVibeBtn').disabled = true;
+  document.getElementById('toMaterialBtn').disabled = true;
+  document.getElementById('toEraBtn').disabled = true;
+  document.getElementById('toPurposeBtn').disabled = true;
+  document.getElementById('toElementBtn').disabled = true;
+  document.getElementById('toAnimalBtn').disabled = true;
+  document.getElementById('toHomeBtn').disabled = true;
+  document.getElementById('toTimeBtn').disabled = true;
+  document.getElementById('toPhilosophyBtn').disabled = true;
+  document.getElementById('toOpenBtn').disabled = true;
+  resetBox();
+  updateTapProgress();
+  document.getElementById('hintText').classList.remove('show');
+  document.getElementById('boxGlyph').textContent = '物';
+  showScreen('screen-emotion');
+}
+
+// ── Save as image (html2canvas) ──
+function shareCard() {
+  const card = document.getElementById('resultCard');
+  if (!card) return;
+
+  showToast('正在生成图片...');
+
+  // Load html2canvas dynamically if not loaded
+  if (typeof html2canvas === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = () => captureCard(card);
+    script.onerror = () => fallbackShare();
+    document.head.appendChild(script);
+  } else {
+    captureCard(card);
+  }
+}
+
+function captureCard(card) {
+  html2canvas(card, {
+    backgroundColor: '#faf6f0',
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    logging: false
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const name = document.querySelector('.card-name-zh')?.textContent || '非遗盲盒';
+      a.href = url;
+      a.download = `非遗盲盒_${name}_${Date.now()}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('✅ 图片已保存！');
+    }, 'image/png');
+  }).catch(() => {
+    fallbackShare();
+  });
+}
+
+function fallbackShare() {
+  const name = document.querySelector('.card-name-zh')?.textContent || '???';
+  const text = t('share_text').replace('{name}', name);
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).then(()=>showToast(t('toast_copied'))).catch(()=>showToast(text));
+  } else {
+    const ta = document.createElement('textarea'); ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    showToast(t('toast_copied'));
+  }
+}
+
+function showToast(msg) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div'); toast.id = 'toast';
+    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(201,168,76,0.95);color:#0f0e0c;padding:0.7rem 1.5rem;border-radius:30px;font-size:0.85rem;z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.3s;letter-spacing:0.05em;';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg; toast.style.opacity = '1';
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+}
+
+function selectLang(lang) {
+  applyI18n(lang);
+  selectedEmotion = null; selectedVibe = null;
+  selectedMaterial = null; selectedEra = null; selectedPurpose = null;
+  selectedElement = null; selectedAnimal = null; selectedHome = null;
+  selectedTime = null; selectedPhilosophy = null;
+  document.getElementById('toVibeBtn').disabled = true;
+  document.getElementById('toMaterialBtn').disabled = true;
+  document.getElementById('toEraBtn').disabled = true;
+  document.getElementById('toPurposeBtn').disabled = true;
+  document.getElementById('toElementBtn').disabled = true;
+  document.getElementById('toAnimalBtn').disabled = true;
+  document.getElementById('toHomeBtn').disabled = true;
+  document.getElementById('toTimeBtn').disabled = true;
+  document.getElementById('toPhilosophyBtn').disabled = true;
+  document.getElementById('toOpenBtn').disabled = true;
+  showScreen('screen-emotion');
+}
+
+// ── Init ──
+function init() {
+  applyI18n('zh');
+  document.querySelectorAll('#screen-lang .lang-btn').forEach(b => b.addEventListener('click', ()=>selectLang(b.dataset.lang)));
+  document.querySelectorAll('#langBadge button').forEach(b => b.addEventListener('click', ()=>selectLang(b.dataset.lang)));
+  document.getElementById('toVibeBtn').addEventListener('click', goToVibe);
+  document.getElementById('toMaterialBtn').addEventListener('click', goToMaterial);
+  document.getElementById('toEraBtn').addEventListener('click', goToEra);
+  document.getElementById('toPurposeBtn').addEventListener('click', goToPurpose);
+  document.getElementById('toElementBtn').addEventListener('click', goToElement);
+  document.getElementById('toAnimalBtn').addEventListener('click', goToAnimal);
+  document.getElementById('toHomeBtn').addEventListener('click', goToHome);
+  document.getElementById('toTimeBtn').addEventListener('click', goToTime);
+  document.getElementById('toPhilosophyBtn').addEventListener('click', goToPhilosophy);
+  document.getElementById('toOpenBtn').addEventListener('click', goToOpen);
+  document.getElementById('boxContainer').addEventListener('click', openBox);
+  document.getElementById('restartBtn').addEventListener('click', restart);
+  document.getElementById('shareBtn').addEventListener('click', shareCard);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+
+<webhighlights-element-registry elements-count="51"></webhighlights-element-registry><div id="webhighlights-notificationshldjnlbobkdkghfidgoecgmklcemanhm"></div><style id="web-highlights-global-style-variables">:root { --wh-slate-50: #f8fafc;--wh-slate-100: #f1f5f9;--wh-slate-200: #e2e8f0;--wh-slate-300: #cbd5e1;--wh-slate-400: #94a3b8;--wh-slate-500: #64748b;--wh-slate-600: #475569;--wh-slate-700: #334155;--wh-slate-800: #1e293b;--wh-slate-900: #0f172a;--wh-slate-950: #020617;--wh-primary-50: rgb(188, 220, 205);--wh-primary-100: rgb(154, 208, 185);--wh-primary-200: rgb(120, 197, 164);--wh-primary-300: rgb(86, 186, 144);--wh-primary-400: rgb(53, 176, 125);--wh-primary-500: rgb(0, 179, 122);--wh-primary-600: hsl(161, 100%, 33%);--wh-primary-700: hsl(161, 100%, 31%);--wh-primary-800: hsl(161, 100%, 29%);--wh-primary-900: hsl(161, 100%, 25%);--wh-primary-950: hsl(161, 100%, 20%);--wh-secondary-50: hsl(218, 22%, 27%);--wh-secondary-100: hsl(218, 22%, 23%);--wh-secondary-200: hsl(218, 22%, 22%);--wh-secondary-300: hsl(218, 22%, 19%);--wh-secondary-400: hsl(218, 22%, 17%);--wh-secondary-500: hsl(218, 22%, 15%);--wh-secondary-600: hsl(218, 22%, 13%);--wh-secondary-700: hsl(218, 22%, 11%);--wh-secondary-800: hsl(218, 22%, 9%);--wh-secondary-900: hsl(218, 22%, 5%);--wh-secondary-950: hsl(218, 22%, 3%);--wh-gray-50: #f9fafb;--wh-gray-100: #f3f4f6;--wh-gray-200: #e5e7eb;--wh-gray-300: #d1d5db;--wh-gray-400: #9ca3af;--wh-gray-500: #6b7280;--wh-gray-600: #4b5563;--wh-gray-700: #374151;--wh-gray-800: #1f2937;--wh-gray-900: #111827;--wh-gray-950: #030712;--wh-zinc-50: #fafafa;--wh-zinc-100: #f4f4f5;--wh-zinc-200: #e4e4e7;--wh-zinc-300: #d4d4d8;--wh-zinc-400: #a1a1aa;--wh-zinc-500: #71717a;--wh-zinc-600: #52525b;--wh-zinc-700: #3f3f46;--wh-zinc-800: #27272a;--wh-zinc-900: #18181b;--wh-zinc-950: #09090b;--wh-neutral-50: #fafafa;--wh-neutral-100: #f5f5f5;--wh-neutral-200: #e5e5e5;--wh-neutral-300: #d4d4d4;--wh-neutral-400: #a3a3a3;--wh-neutral-500: #737373;--wh-neutral-600: #525252;--wh-neutral-700: #404040;--wh-neutral-800: #262626;--wh-neutral-900: #171717;--wh-neutral-950: #0a0a0a;--wh-stone-50: #fafaf9;--wh-stone-100: #f5f5f4;--wh-stone-200: #e7e5e4;--wh-stone-300: #d6d3d1;--wh-stone-400: #a8a29e;--wh-stone-500: #78716c;--wh-stone-600: #57534e;--wh-stone-700: #44403c;--wh-stone-800: #292524;--wh-stone-900: #1c1917;--wh-stone-950: #0c0a09;--wh-red-50: #fef2f2;--wh-red-100: #fee2e2;--wh-red-200: #fecaca;--wh-red-300: #fca5a5;--wh-red-400: #f87171;--wh-red-500: #ef4444;--wh-red-600: #dc2626;--wh-red-700: #b91c1c;--wh-red-800: #991b1b;--wh-red-900: #7f1d1d;--wh-red-950: #450a0a;--wh-orange-50: #fff7ed;--wh-orange-100: #ffedd5;--wh-orange-200: #fed7aa;--wh-orange-300: #fdba74;--wh-orange-400: #fb923c;--wh-orange-500: #f97316;--wh-orange-600: #ea580c;--wh-orange-700: #c2410c;--wh-orange-800: #9a3412;--wh-orange-900: #7c2d12;--wh-orange-950: #431407;--wh-amber-50: #fffbeb;--wh-amber-100: #fef3c7;--wh-amber-200: #fde68a;--wh-amber-300: #fcd34d;--wh-amber-400: #fbbf24;--wh-amber-500: #f59e0b;--wh-amber-600: #d97706;--wh-amber-700: #b45309;--wh-amber-800: #92400e;--wh-amber-900: #78350f;--wh-amber-950: #451a03;--wh-yellow-50: #fefce8;--wh-yellow-100: #fef9c3;--wh-yellow-200: #fef08a;--wh-yellow-300: #fde047;--wh-yellow-400: #facc15;--wh-yellow-500: #eab308;--wh-yellow-600: #ca8a04;--wh-yellow-700: #a16207;--wh-yellow-800: #854d0e;--wh-yellow-900: #713f12;--wh-yellow-950: #422006;--wh-lime-50: #f7fee7;--wh-lime-100: #ecfccb;--wh-lime-200: #d9f99d;--wh-lime-300: #bef264;--wh-lime-400: #a3e635;--wh-lime-500: #84cc16;--wh-lime-600: #65a30d;--wh-lime-700: #4d7c0f;--wh-lime-800: #3f6212;--wh-lime-900: #365314;--wh-lime-950: #1a2e05;--wh-green-50: #f0fdf4;--wh-green-100: #dcfce7;--wh-green-200: #bbf7d0;--wh-green-300: #86efac;--wh-green-400: #4ade80;--wh-green-500: #22c55e;--wh-green-600: #16a34a;--wh-green-700: #15803d;--wh-green-800: #166534;--wh-green-900: #14532d;--wh-green-950: #052e16;--wh-emerald-50: #ecfdf5;--wh-emerald-100: #d1fae5;--wh-emerald-200: #a7f3d0;--wh-emerald-300: #6ee7b7;--wh-emerald-400: #34d399;--wh-emerald-500: #10b981;--wh-emerald-600: #059669;--wh-emerald-700: #047857;--wh-emerald-800: #065f46;--wh-emerald-900: #064e3b;--wh-emerald-950: #022c22;--wh-teal-50: #f0fdfa;--wh-teal-100: #ccfbf1;--wh-teal-200: #99f6e4;--wh-teal-300: #5eead4;--wh-teal-400: #2dd4bf;--wh-teal-500: #14b8a6;--wh-teal-600: #0d9488;--wh-teal-700: #0f766e;--wh-teal-800: #115e59;--wh-teal-900: #134e4a;--wh-teal-950: #042f2e;--wh-cyan-50: #ecfeff;--wh-cyan-100: #cffafe;--wh-cyan-200: #a5f3fc;--wh-cyan-300: #67e8f9;--wh-cyan-400: #22d3ee;--wh-cyan-500: #06b6d4;--wh-cyan-600: #0891b2;--wh-cyan-700: #0e7490;--wh-cyan-800: #155e75;--wh-cyan-900: #164e63;--wh-cyan-950: #083344;--wh-sky-50: #f0f9ff;--wh-sky-100: #e0f2fe;--wh-sky-200: #bae6fd;--wh-sky-300: #7dd3fc;--wh-sky-400: #38bdf8;--wh-sky-500: #0ea5e9;--wh-sky-600: #0284c7;--wh-sky-700: #0369a1;--wh-sky-800: #075985;--wh-sky-900: #0c4a6e;--wh-sky-950: #082f49;--wh-blue-50: #eff6ff;--wh-blue-100: #dbeafe;--wh-blue-200: #bfdbfe;--wh-blue-300: #93c5fd;--wh-blue-400: #60a5fa;--wh-blue-500: #3b82f6;--wh-blue-600: #2563eb;--wh-blue-700: #1d4ed8;--wh-blue-800: #1e40af;--wh-blue-900: #1e3a8a;--wh-blue-950: #172554;--wh-indigo-50: #eef2ff;--wh-indigo-100: #e0e7ff;--wh-indigo-200: #c7d2fe;--wh-indigo-300: #a5b4fc;--wh-indigo-400: #818cf8;--wh-indigo-500: #6366f1;--wh-indigo-600: #4f46e5;--wh-indigo-700: #4338ca;--wh-indigo-800: #3730a3;--wh-indigo-900: #312e81;--wh-indigo-950: #1e1b4b;--wh-violet-50: #f5f3ff;--wh-violet-100: #ede9fe;--wh-violet-200: #ddd6fe;--wh-violet-300: #c4b5fd;--wh-violet-400: #a78bfa;--wh-violet-500: #8b5cf6;--wh-violet-600: #7c3aed;--wh-violet-700: #6d28d9;--wh-violet-800: #5b21b6;--wh-violet-900: #4c1d95;--wh-violet-950: #2e1065;--wh-purple-50: #faf5ff;--wh-purple-100: #f3e8ff;--wh-purple-200: #e9d5ff;--wh-purple-300: #d8b4fe;--wh-purple-400: #c084fc;--wh-purple-500: #a855f7;--wh-purple-600: #9333ea;--wh-purple-700: #7e22ce;--wh-purple-800: #6b21a8;--wh-purple-900: #581c87;--wh-purple-950: #3b0764;--wh-fuchsia-50: #fdf4ff;--wh-fuchsia-100: #fae8ff;--wh-fuchsia-200: #f5d0fe;--wh-fuchsia-300: #f0abfc;--wh-fuchsia-400: #e879f9;--wh-fuchsia-500: #d946ef;--wh-fuchsia-600: #c026d3;--wh-fuchsia-700: #a21caf;--wh-fuchsia-800: #86198f;--wh-fuchsia-900: #701a75;--wh-fuchsia-950: #4a044e;--wh-pink-50: #fdf2f8;--wh-pink-100: #fce7f3;--wh-pink-200: #fbcfe8;--wh-pink-300: #f9a8d4;--wh-pink-400: #f472b6;--wh-pink-500: #ec4899;--wh-pink-600: #db2777;--wh-pink-700: #be185d;--wh-pink-800: #9d174d;--wh-pink-900: #831843;--wh-pink-950: #500724;--wh-rose-50: #fff1f2;--wh-rose-100: #ffe4e6;--wh-rose-200: #fecdd3;--wh-rose-300: #fda4af;--wh-rose-400: #fb7185;--wh-rose-500: #f43f5e;--wh-rose-600: #e11d48;--wh-rose-700: #be123c;--wh-rose-800: #9f1239;--wh-rose-900: #881337;--wh-rose-950: #4c0519;--wh-primary-color: var(--wh-primary-500);--wh-primary-color-hover: #00a16e;--wh-primary-color-transparent: #00aa7424;--wh-primary-color-transparent-light: #00a8730f;--wh-primary-color-transparent-strong: #00a87340;--wh-primary-color-transparent-stronger: hsla(161, 100%, 33%, 0.5);--wh-primary-color-transparent-strongest: hsla(161, 100%, 33%, 0.75);--wh-primary-light: #53e3a6;--wh-primary-dark: #007f4b;--wh-primary-dark-hover: #017444;--wh-primary-shadow: #00b07841;--wh-primary-shadow-2: #00b07870;--wh-primary-border-color: #c8c8c870;--wh-warning-color: #ff5a1f;--wh-warning-color-light: #feecdc;--wh-ai-primary-decimal: 167, 139, 250;--wh-ai-secondary-decimal  : 147, 51, 234;--wh-ai-accent-decimal: 244, 114, 182;--wh-ai-primary: rgba(var(--wh-ai-primary-decimal), 1);--wh-ai-secondary: rgba(var(--wh-ai-secondary-decimal), 1);--wh-ai-accent: rgba(var(--wh-ai-accent-decimal), 1);--secondary-color: #3d4455;--secondary-color-hover: #3a4052;--secondary-color-transparent: #3d44556b;--secondary-light: #4c556d;--secondary-dark: #252934;--secondary-dark-hover: #191b22;--secondary-dark-transparent: #2e2d2d46;--highlight-color: #92ffaa;--error-color: #d62d4c;--error-color-light: #fde8e8;--error-info: #14854e;--success-color: #0e9f6e;--success-color-light: #def7ec;--font-color: #2f3237;--font-color-light: #626364;--font-color-dark: #252525;--wh-font-family: 'SF Pro Display', 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";--font-family: var(--wh-font-family);--wh-link-color: #1d9bf0;--wh-form-active-color: #3b82f6;--wh-accent-blue: #1f6feb;--BREAKPOINT_XS: 575px;--BREAKPOINT_S: 767px;--BREAKPOINT_M: 991px;--BREAKPOINT_L: 1199px;--BREAKPOINT_XL: 1399px;--BREAKPOINT_XXL: 1699px;--wh-danger-color: var(--wh-red-600);--wh-danger-color-hover: var(--wh-red-700);--wh-font-size: 13px;--wh-blockquote-line-height: 1.3;--wh-breakpoint-xs: 575px;--wh-breakpoint-s: 767px;--wh-breakpoint-m: 991px;--wh-breakpoint-l: 1199px;--wh-breakpoint-xl: 1399px;--wh-breakpoint-xxl: 1699px;--wh-font-size-2xs: 10px;--wh-font-size-xs: 11px;--wh-font-size-s: 12px;--wh-font-size-m: 13px;--wh-font-size-l: 14px;--wh-font-size-xl: 16px;--wh-font-size-2xl: 18px;--wh-font-size-3xl: 20px;--wh-font-size-4xl: 24px;--wh-font-size-5xl: 30px;--wh-font-size-6xl: 36px;--wh-spacing-2xs: 2px;--wh-spacing-xs: 4px;--wh-spacing-s: 8px;--wh-spacing-m: 12px;--wh-spacing-l: 16px;--wh-spacing-xl: 24px;--wh-spacing-2xl: 32px;--wh-spacing-3xl: 48px;--wh-spacing-4xl: 64px;--wh-spacing-5xl: 96px;--wh-border-radius-none: 0px;--wh-border-radius-xs: 2px;--wh-border-radius-s: 4px;--wh-border-radius-m: 6px;--wh-border-radius-l: 8px;--wh-border-radius-xl: 12px;--wh-border-radius-2xl: 16px;--wh-border-radius-3xl: 24px;--wh-border-radius-full: 9999px;--wh-font-weight-light: 300;--wh-font-weight-normal: 400;--wh-font-weight-medium: 500;--wh-font-weight-semibold: 600;--wh-font-weight-bold: 700;--wh-font-weight-extrabold: 800;--wh-line-height-tight: 1.25;--wh-line-height-snug: 1.375;--wh-line-height-normal: 1.5;--wh-line-height-relaxed: 1.625;--wh-line-height-loose: 2;--wh-bg-base: hsl(0, 0%, 100%);--wh-bg-base-hover: var(--wh-gray-50);--wh-border-base: hsl(20, 6%, 94%);--wh-border-base-hover: hsl(20, 6%, 90%);--wh-border-base-strong: hsl(24, 6%, 85%);--wh-border-base-strong-hover: hsl(24, 6%, 70%);--wh-bg-base-hover-strong: var(--wh-gray-100);--wh-bg-back: hsl(0, 0%, 100%);--wh-bg-back-strong: var(--wh-gray-100);--wh-bg-back-strong-hover: var(--wh-gray-200);--wh-bg-back-hover: var(--wh-neutral-50);--wh-bg-back-hover-strong: var(--wh-neutral-100);--wh-border-back: #e7e5e4;--wh-border-back-strong: #d6d3d1;--wh-bg-front: hsl(0, 0%, 100%);--wh-bg-front-strong: var(--wh-neutral-100);--wh-bg-front-strong-hover: var(--wh-neutral-200);--wh-bg-front-hover: hsl(0, 0%, 98%);--wh-bg-front-hover-strong: hsl(0, 0%, 95%);--wh-border-front: #e7e5e4;--wh-border-front-strong: hsl(24, 6%, 83%);--wh-border-front-hover: hsl(24, 6%, 63%);--wh-text-stronger: hsl(45, 8%, 25%);--wh-text-strongest: hsl(45, 8%, 20%);--wh-text-strong: hsl(45, 8%, 20%);--wh-text: hsl(45, 8%, 20%);--wh-text-hover: var(--wh-text-strong);--wh-text-light: hsl(45, 5%, 26%);--wh-text-lighter: hsl(45, 3%, 38%);--wh-text-lightest: hsl(45, 2%, 50%);--wh-border-color: var(--wh-gray-300);--wh-border-color-strong: var(--wh-gray-400);--wh-note-editor-bg-color: rgb(247, 246, 243);--wh-note-editor-bg-color-preview: rgba(247, 246, 243, 0.85);--wh-bg-tags: var(--wh-bg-front-strong);--wh-bg-tags-hover: var(--wh-bg-front-strong-hover);--wh-syntax-bg-color: rgb(230, 230, 230);--wh-fallback-img-color: var(--wh-gray-100);--wh-bg-disabled: #e7e9ec;--wh-bg-notification-unread: rgba(187, 219, 204, 0.2);--wh-bg-notification-unread-hover: rgba(187, 219, 204, 0.1);--wh-subtle-gray: rgb(128, 128, 128, 0.15);--wh-shadow: inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.1),
+      /* 2. shadow ring 👇 */ 0 0 0 1px hsla(230, 13%, 9%, 0.075),
+      /* 3. multiple soft shadows 👇 */ 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02),
+      0 0.9px 1.5px hsla(230, 13%, 9%, 0.045),
+      0 3.5px 6px hsla(230, 13%, 9%, 0.09);--wh-shadow-primary: var(--wh-primary-500) 0px 0px 0px 1px inset,
+      var(--wh-primary-500) 0px 0px 1px;--wh-skeleton-bg: var(--wh-gray-200);--wh-skeleton-bg-hover: var(--wh-gray-300);--wh-skeleton-bg-strong: var(--wh-gray-300);--wh-skeleton-bg-strong-hover: var(--wh-gray-400);--wh-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);--wh-shadow-s: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);--wh-shadow-m: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);--wh-shadow-l: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);--wh-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);--wh-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);--wh-warning-bg: rgba(245, 158, 11, 0.08);--wh-warning-bg-hover: rgba(245, 158, 11, 0.10);--wh-warning-border: rgba(245, 158, 11, 0.2);--wh-warning-text: #d97706; }</style><div id="give-freely-root-hldjnlbobkdkghfidgoecgmklcemanhm" class="give-freely-root" data-extension-id="hldjnlbobkdkghfidgoecgmklcemanhm" data-extension-name="Web Highlights: PDF &amp; Web Highlighter + Notes &amp; AI Summary" style="display: block;"><template shadowrootmode="open"><style>
+  :host {
+    all: initial;
+  }
+
+  .gf-scroll-remove::-webkit-scrollbar {
+    border-radius-bottom-right: 15px;
+  }
+
+  button {
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
+  .give-freely-close-button:hover {
+    opacity: 0.7;
+  }
+
+  input[type="radio"] {
+    margin-right: 8px;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 1em 0;
+  }
+
+  dialog::backdrop  {
+    background-color: rgba(180, 180, 180, 0.6);
+  }
+
+  dialog.backdrop-hidden::backdrop  {
+    background-color: transparent;
+  }
+</style><div><div class="gf-app"></div></div></template></div><style id="web-highlights-global-styles">
+  webhighlights-sidebar {
+    --wh-font-size: 13.5px;
+  }
+
+  body.web-highlights-animate {
+    transition: all 300ms linear;
+    transition-property: margin-left, margin-right;
+  }
+
+  body.web-highlights-open {
+    margin-left: 400px !important;
+  }
+
+  web-highlight.webhighlights-highlight {
+    background-color: #92ffaa;
+    cursor: pointer;
+    visibility: visible !important;
+  }
+
+  web-highlight.webhighlights-highlight.webhighlight-with-tags,
+  web-highlight.webhighlights-highlight.webhighlight-with-notes {
+    border-bottom: 2.8px solid gray;
+    border-radius: 0px;
+  }
+
+  web-highlight > *:not(webhighlights-popup-toolbox) {
+    background-color: #92ffaa;
+  }
+
+  webhighlights-popup-toolbox.contains-highlight {
+    transform: translate(-63px, -10px);
+    position: fixed;
+  }
+</style><webhighlights-popup-toolbox><template shadowrootmode="open"><!----><!--?--></template></webhighlights-popup-toolbox><webhighlights-marker><template shadowrootmode="open"><!---->
+      <!--?lit$424969658$-->
+    </template></webhighlights-marker></body><webhighlights-sidebar alignment="left" sidebar-width="400"><template shadowrootmode="open"><!---->
+      <!--?lit$424969658$-->
+            <webhighlights-main-component part="main-component" data-testid="webhighlights-sidebar-MAIN_COMPONENT" style="left: 0px; right: unset;"><template shadowrootmode="open"><!---->
+      <webhighlights-popover data-testid="webhighlights-main-component-POPOVER"><template shadowrootmode="open"><!----><!--?--></template>
+        <!--?lit$424969658$--><!--?-->
+      </webhighlights-popover>
+
+      <!-- Button to toggle side-bar. It hides when animation is active -->
+      <!--?lit$424969658$--><!--?-->
+      <!--?lit$424969658$-->
+    </template></webhighlights-main-component>
+          
+      <!--?lit$424969658$--><!--?-->
+    </template></webhighlights-sidebar></html>
