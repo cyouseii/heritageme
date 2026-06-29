@@ -14,11 +14,11 @@
 
 ## 项目简介 | About
 
-**Heritage Me（非遗盲盒）** 是一款面向中日青年的跨文化传播互动网页。用户通过选择语言、情绪状态、审美偏好等多维度问题，生成专属的「非遗人格卡片」，在探索自我的过程中自然接触中国传统非遗文化。
+**Heritage Me（非遗盲盒）** 是一款面向海外青年的跨文化传播互动网页。用户通过选择语言、情绪状态、审美偏好等多维度问题，生成专属的「非遗人格卡片」，在探索自我的过程中自然接触中国传统非遗文化。
 
 项目借鉴了日本青年群体熟悉的**扭蛋文化**与**人格测试**逻辑，以轻互动的形式降低文化理解门槛，探索非遗数字化传播与跨文化沟通的新可能。
 
-**Heritage Me** is an interactive cross-cultural web experience designed for Chinese and Japanese youth. By answering questions about language, mood, and aesthetic preferences, users unlock a personalized "ICH Personality Card" — discovering Chinese intangible cultural heritage through self-exploration.
+**Heritage Me** is an interactive cross-cultural web experience designed for Chinese and young people overseas. By answering questions about language, mood, and aesthetic preferences, users unlock a personalized "ICH Personality Card" — discovering Chinese intangible cultural heritage through self-exploration.
 
 Drawing inspiration from Japan's **gacha (capsule toy)** culture and personality quiz formats, the project lowers cultural barriers through playful interaction, exploring new possibilities for digital heritage communication.
 
