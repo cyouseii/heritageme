@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="heritage-images/01-qinghuaci.png" alt="Heritage Me" width="120" style="border-radius: 16px; border: 1px solid #c9a84c;" />
-</p>
-
 <h1 align="center">Heritage Me · 非遗盲盒</h1>
 
 <p align="center">
@@ -9,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/lang-中文_|_日本語-brightgreen" alt="languages" />
+  <img src="https://img.shields.io/badge/lang-中文_|_日本語_|_English-brightgreen" alt="languages" />
   <img src="https://img.shields.io/badge/tech-HTML_|_CSS_|_JS-blue" alt="tech" />
   <img src="https://img.shields.io/badge/items-14-red" alt="items" />
 </p>
@@ -37,7 +33,7 @@ Language → Emotion  →   Vibe    →  Unboxing  →  Result Card
 
 | 步骤 | Step | 说明 |
 |------|------|------|
-| 🌐 语言 | Language | 中文 / 日本語 |
+| 🌐 语言 | Language | 中文 / 日本語 / English |
 | 🎭 情绪 | Emotion | 9种情绪状态选择 |
 | 🎨 偏好 | Vibe | 多选审美风格标签 |
 | 📦 开盒 | Unbox | 震动+发光仪式动画 |
@@ -63,7 +59,7 @@ Language → Emotion  →   Vibe    →  Unboxing  →  Result Card
 
 - **纯前端**：HTML + CSS + JavaScript，零依赖
 - **响应式设计**：适配移动端与桌面端
-- **双语支持**：中/日文切换
+- **三语支持**：中/日/英切换
 - **CSS 动画**：盒子震动、粒子爆发、卡片揭示等东方美学动画
 
 ---
